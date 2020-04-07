@@ -1,6 +1,6 @@
 <?php
 
-namespace Square1\NovaMetrics;
+namespace Jdlabs\NovaMetrics;
 
 use Laravel\Nova\Metrics\Value;
 

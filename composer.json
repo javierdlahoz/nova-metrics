@@ -1,6 +1,6 @@
 {
-    "name": "square1/nova-metrics",
-    "description": "Add support for resource-filters on your laravel nova metrics",
+    "name": "jdlabs/nova-metrics",
+    "description": "custom laravel-nova metrics",
     "keywords": [
         "laravel",
         "nova",
@@ -9,7 +9,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": ">=7.1.0"
+        "php": ">=7.3.*"
     },
     "autoload": {
         "psr-4": {
@@ -19,7 +19,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Square1\\NovaMetrics\\CardServiceProvider"
+                "Jdlabs\\NovaMetrics\\CardServiceProvider"
             ]
         }
     },

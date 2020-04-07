@@ -1,6 +1,6 @@
 <?php
 
-namespace Square1\NovaMetrics;
+namespace Jdlabs\NovaMetrics;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
