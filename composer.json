@@ -13,7 +13,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Square1\\NovaMetrics\\": "src/"
+            "Jdlabs\\NovaMetrics\\": "src/"
         }
     },
     "extra": {
