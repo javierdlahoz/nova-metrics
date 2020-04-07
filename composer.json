@@ -1,0 +1,31 @@
+{
+    "name": "square1/nova-metrics",
+    "description": "Add support for resource-filters on your laravel nova metrics",
+    "keywords": [
+        "laravel",
+        "nova",
+        "metrics",
+        "filters"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Square1\\NovaMetrics\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Square1\\NovaMetrics\\CardServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
