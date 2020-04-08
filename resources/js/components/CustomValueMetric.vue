@@ -21,11 +21,12 @@
     import { InteractsWithDates, Minimum } from 'laravel-nova'
     import BaseValueMetric from './Base/ValueMetric'
     import MetricBehavior from './MetricBehavior'
+    import CustomParameter from '../mixins/CustomParameter'
 
     export default {
         name: 'ValueMetric',
 
-        mixins: [InteractsWithDates, MetricBehavior],
+        mixins: [InteractsWithDates, MetricBehavior, CustomParameter],
 
         components: {
             BaseValueMetric,
@@ -143,7 +144,8 @@
 
                 if (this.resourceName) {
                     const filters = this.$route.query[`${this.resourceName}_filter`];
-                    payload.params.filters = filters;
+                    // payload.params.filters = filters;
+                    payload.params = this.parameters;
                 }
 
                 return payload;

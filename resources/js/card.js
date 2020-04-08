@@ -7,4 +7,6 @@ Nova.booting((Vue, router, store) => {
     Vue.component('CustomBaseValueMetric', require('./components/Base/ValueMetric').default);
     Vue.component('CustomBasePartitionMetric', require('./components/Base/PartitionMetric').default);
     Vue.component('CustomBaseTrendMetric', require('./components/Base/TrendMetric').default);
+
+    Vue.mixin(require('./mixins/CustomParameter'));
 })
