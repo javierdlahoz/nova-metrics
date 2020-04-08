@@ -143,9 +143,7 @@
                 }
 
                 if (this.resourceName) {
-                    const filters = this.$route.query[`${this.resourceName}_filter`];
-                    // payload.params.filters = filters;
-                    payload.params = this.parameters;
+                    payload.params = {...this.parameters, ...this.$route.query};
                 }
 
                 return payload;
