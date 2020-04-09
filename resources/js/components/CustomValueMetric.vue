@@ -70,19 +70,14 @@
             resourceId() {
                 this.fetch()
             },
+            '$route.query'() {
+                this.$nextTick(() => this.fetch())
+            }
         },
 
         created() {
             if (this.hasRanges) {
                 this.selectedRangeKey = this.card.ranges[0].value;
-            }
-
-            if (this.card.refreshWhenActionRuns) {
-                Nova.$on("action-executed", () => this.fetch());
-            }
-
-            if (this.resourceName) {
-                Nova.$on("resources-loaded", () => this.fetch());
             }
         },
 
