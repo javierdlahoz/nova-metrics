@@ -138,7 +138,7 @@
                 }
 
                 if (this.resourceName) {
-                    payload.params = {...this.parameters, ...this.$route.query};
+                    payload.params = {...this.parameters};
                 }
 
                 return payload;
