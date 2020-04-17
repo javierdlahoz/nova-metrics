@@ -76,7 +76,7 @@ class CustomValue extends Value
      * @param  NovaRequest $request
      * @return mixed
      */
-    public function chainFilters($query, NovaRequest $request)
+    public function chainFilters(Builder $query, NovaRequest $request)
     {
         $query->when($request->filled('search'),
             fn ($query) => $query = $this->applySearchFilter($query, $request)
@@ -98,7 +98,7 @@ class CustomValue extends Value
      * @param  NovaRequest $request
      * @return Builder
      */
-    public function applyFilters($query, NovaRequest $request)
+    public function applyFilters(Builder $query, NovaRequest $request)
     {
         $filters = $this->getFilters($request);
 
@@ -123,7 +123,7 @@ class CustomValue extends Value
      * @param  array $filter
      * @return Builder
      */
-    public function applyCustomFilters($query, $filter)
+    public function applyCustomFilters(Builder $query, $filter)
     {
         // TODO: Override this on custom metrics
         return $query;
@@ -136,7 +136,7 @@ class CustomValue extends Value
      * @param  NovaRequest $request
      * @return mixed
      */
-    public function applySearchFilter($query, NovaRequest $request)
+    public function applySearchFilter(Builder $query, NovaRequest $request)
     {
         $class = $request->resource();
         $searchableFields = $class::$search;
@@ -157,7 +157,7 @@ class CustomValue extends Value
      * @param  NovaRequest $request
      * @return mixed
      */
-    public function applyTrashedFilter($query, NovaRequest $request)
+    public function applyTrashedFilter(Builder $query, NovaRequest $request)
     {
         $method = "{$request->input('trashed')}Trashed";
         $query->{$method}();
