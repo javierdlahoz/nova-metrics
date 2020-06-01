@@ -1,1 +1,6 @@
 // Nova Card CSS
+.jdlabs-card {
+    &.card-panel {
+        height: unset;
+    }
+}
