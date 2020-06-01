@@ -4,7 +4,7 @@
         <div class="flex mb-4">
             <h3 class="mr-3 text-base text-80 font-bold">{{ card.name }}</h3>
         </div>
-        <div v-if="chartOptions && chartData && series.length > 0">
+        <div v-if="chartOptions && chartData && series.length > 0" class="chart-wrapper">
             <apexchart
                 width="100%"
                 height="400"

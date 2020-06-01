@@ -79,7 +79,7 @@ class BarChart extends Partition
                         'breakpoint' => 1360,
                         'options' => [
                             'chart' => [
-                                'height' => 312
+                                'height' => 320
                             ],
                             'legend' => [
                                 'position' => 'bottom'
