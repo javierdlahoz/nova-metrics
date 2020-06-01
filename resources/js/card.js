@@ -8,6 +8,7 @@ Nova.booting((Vue, router, store) => {
     Vue.component('CustomBaseTrendMetric', require('./components/Base/TrendMetric').default);
 
     Vue.component('JdlabsPieChart', require('./components/PieChart').default);
+    Vue.component('JdlabsBarChart', require('./components/BarChart').default);
 
     Vue.mixin(require('./mixins/CustomParameter'));
 })

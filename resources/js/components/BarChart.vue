@@ -8,7 +8,7 @@
             <apexchart
                 width="100%"
                 height="400"
-                type="pie"
+                type="bar"
                 :options="chartOptions"
                 :series="series"></apexchart>
         </div>
@@ -45,6 +45,13 @@
                 ready: false,
                 chartData: null,
                 chartOptions: {}
+            }
+        },
+        computed: {
+            series() {
+                return [
+                    {data: this.chartData.map((item) => parseFloat(item.value))}
+                ]
             }
         }
     };
