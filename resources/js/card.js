@@ -1,14 +1,4 @@
-import VueApexCharts from 'vue-apexcharts';
-
 Nova.booting((Vue, router, store) => {
-    try {
-        Vue.use(VueApexCharts);
-        Vue.component('apexchart', VueApexCharts);
-    } catch (e) {
-        console.log('apexcharts already loaded');
-    }
-
-
     Vue.component('CustomTrendMetric', require('./components/CustomTrendMetric').default);
     Vue.component('CustomValueMetric', require('./components/CustomValueMetric').default);
     Vue.component('CustomPartitionMetric', require('./components/CustomPartitionMetric').default)

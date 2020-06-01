@@ -1,29 +1,27 @@
+
 <template>
     <loading-card :loading="loading" class="jdlabs-card px-6 py-4">
         <div class="flex mb-4">
             <h3 class="mr-3 text-base text-80 font-bold">{{ card.name }}</h3>
-            <select
-                v-if="ranges.length > 0"
-                @change="handleChange"
-                class="select-box-sm ml-auto min-w-24 h-6 text-xs appearance-none bg-40 pl-2 pr-6 active:outline-none active:shadow-outline focus:outline-none focus:shadow-outline"
-            >
-                <option
-                    v-for="option in ranges"
-                    :key="option.value"
-                    :value="option.value"
-                    :selected="selectedRangeKey == option.value"
-                >
-                    {{ option.label }}
-                </option>
-            </select>
         </div>
-        <div>
-            <apexchart v-if="chartOptions" width="500" type="pie" :options="chartOptions" :series="series"></apexchart>
+        <div v-if="chartOptions && chartData && series.length > 0">
+            <apexchart
+                width="100%"
+                height="400"
+                type="pie"
+                :options="chartOptions"
+                :series="series"></apexchart>
         </div>
     </loading-card>
 </template>
 <script>
+    import VueApexCharts from 'vue-apexcharts';
+    import Chartable from '../mixins/Chartable';
+    import {Minimum} from "laravel-nova";
+
     export default {
+        components: [VueApexCharts],
+        mixins: [Chartable],
         props: {
             selectedRangeKey: [String, Number],
             card: {
@@ -39,28 +37,34 @@
                 default: '',
             },
         },
-        watch: {
-            selectedRangeKey: function (newRange, oldRange) {
-                this.renderChart()
-            },
-            card: function (newRange, oldRange) {
-                this.renderChart();
-            },
-        },
         mounted() {
-            this.ranges = this.card.ranges;
-            this.renderChart();
+            this.fetch();
         },
         data() {
             return {
                 ready: false,
-                ranges: [],
+                chartData: null,
                 chartOptions: {}
             }
         },
         methods: {
+            fetch() {
+                this.loading = true
+
+                Minimum(Nova.request(this.chartEndpoint)).then(
+                    ({
+                         data: {
+                             value: { value },
+                         },
+                     }) => {
+                        this.chartData = value;
+                        this.loading = false;
+                        this.renderChart();
+                    }
+                )
+            },
             renderChart() {
-                if (this.card.series) {
+                if (this.chartData) {
                     this.chartOptions = this.card.meta;
                     this.chartOptions.labels = this.labels;
                 }
@@ -68,10 +72,10 @@
         },
         computed: {
             labels() {
-                return this.card.series.map((item) => item.label);
+                return this.chartData.map((item) => item.label);
             },
             series() {
-                return this.card.series.map((item) => parseFloat(item.value));
+                return this.chartData.map((item) => parseFloat(item.value));
             }
         }
     };

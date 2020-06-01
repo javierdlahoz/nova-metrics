@@ -6,9 +6,10 @@ namespace Jdlabs\NovaMetrics;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Card;
-use Laravel\Nova\Metrics\RangedMetric;
+use Laravel\Nova\Metrics\Partition;
+use Laravel\Nova\Metrics\PartitionResult;
 
-class PieChart extends RangedMetric
+class PieChart extends Partition
 {
     /**
      * The width of the card (1/3, 1/2, or full).
@@ -38,16 +39,6 @@ class PieChart extends RangedMetric
     }
 
     /**
-     * Type of the chart
-     *
-     * @return string
-     */
-    protected function type()
-    {
-        return 'pie';
-    }
-
-    /**
      * Available colors
      *
      * @return string[]
@@ -70,34 +61,6 @@ class PieChart extends RangedMetric
     }
 
     /**
-     * Get the ranges available for the metric.
-     *
-     * @return array
-     */
-    public function ranges()
-    {
-        return [
-             'TODAY' => 'Today',
-             30 => '30 Days',
-             60 => '60 Days',
-             365 => '365 Days',
-             'MTD' => 'Month To Date',
-             'QTD' => 'Quarter To Date',
-             'YTD' => 'Year To Date',
-        ];
-    }
-
-    /**
-     * Collection to be displayed
-     *
-     * @return array
-     */
-    public function series(Request $request)
-    {
-        return [];
-    }
-
-    /**
      * Return the meta data to be used on the pie charts
      *
      * @return array|void
@@ -108,22 +71,8 @@ class PieChart extends RangedMetric
         return [
             'meta' => [
                 'chart' => [
-                    'id' => $this->id(),
-                    'type' => $this->type(),
-                    'title' => [
-                        'style' => [
-                            'fontSize' => '14px'
-                        ]
-                    ],
-                    'style' => [
-                        'fontSize' => '14px'
-                    ]
+                    'id' => $this->id()
                 ],
-                'style' => [
-                    'fontSize' => '14px'
-                ],
-                'title' => $this->name(),
-                'type' => $this->type(),
                 'colors' => $this->colors(),
                 'responsive' => [
                     [
@@ -149,8 +98,7 @@ class PieChart extends RangedMetric
                         ]
                     ]
                 ]
-            ],
-            'series' => $this->series($request)
+            ]
         ];
     }
 
