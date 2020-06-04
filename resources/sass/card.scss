@@ -1,10 +1,23 @@
 // Nova Card CSS
 .jdlabs-card {
-    &.card-panel {
-        height: unset;
-    }
 
     .chart-wrapper {
-        min-height: 340px;
+        div:first-child {
+            //width: 100% !important;
+        }
     }
+
+    .apexcharts-canvas {
+        svg:not(:root) {
+            overflow: visible;
+        }
+        //width: 100% !important;
+    }
+    //&.card-panel {
+    //    height: unset;
+    //}
+    //
+    //.chart-wrapper {
+    //    min-height: 340px;
+    //}
 }

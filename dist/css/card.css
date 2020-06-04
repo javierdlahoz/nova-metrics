@@ -1,1 +1,4 @@
-.jdlabs-card.card-panel{height:unset}.jdlabs-card .chart-wrapper{min-height:340px}
+.jdlabs-card .apexcharts-canvas svg:not(:root) {
+  overflow: visible;
+}
+

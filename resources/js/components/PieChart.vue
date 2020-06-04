@@ -1,13 +1,13 @@
 
 <template>
-    <loading-card :loading="loading" class="jdlabs-card px-6 py-4">
-        <div class="flex mb-4">
+    <loading-card :loading="loading" class="flex flex-col jdlabs-card px-6 py-4" v-bind:style="{height: `${card.meta.cardHeight}px`}">
+        <div class="flex">
             <h3 class="mr-3 text-base text-80 font-bold">{{ card.name }}</h3>
         </div>
-        <div v-if="chartOptions && chartData && series.length > 0" class="chart-wrapper">
+        <div v-if="chartOptions && chartData && series.length > 0" class="chart-wrapper"
+             v-bind:style="{height: `${card.meta.cardHeight - 40}px`}">
             <apexchart
-                width="100%"
-                height="400"
+                height="100%"
                 type="pie"
                 :options="chartOptions"
                 :series="series"></apexchart>
