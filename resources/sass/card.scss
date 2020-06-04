@@ -1,1 +1,10 @@
 // Nova Card CSS
+.jdlabs-card {
+    &.card-panel {
+        height: unset;
+    }
+
+    .chart-wrapper {
+        min-height: 340px;
+    }
+}
