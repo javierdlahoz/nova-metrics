@@ -3,8 +3,11 @@ Nova.booting((Vue, router, store) => {
     Vue.component('CustomValueMetric', require('./components/CustomValueMetric').default);
     Vue.component('CustomPartitionMetric', require('./components/CustomPartitionMetric').default)
     Vue.component('DynamicPieChartMetric', require('./components/DynamicPieChart').default)
+    Vue.component('DynamicBarChartMetric', require('./components/DynamicBarChart').default)
 
-    Vue.component('JdlabsPieChart', require('./components/Base/PieChart').default);
+    Vue.component('JdlabsPieMetric', require('./components/Base/PieMetric').default);
+    Vue.component('JdlabsBarMetric', require('./components/Base/BarMetric').default);
+
     Vue.component('CustomBaseValueMetric', require('./components/Base/ValueMetric').default);
     Vue.component('CustomBasePartitionMetric', require('./components/Base/PartitionMetric').default);
     Vue.component('CustomBaseTrendMetric', require('./components/Base/TrendMetric').default);

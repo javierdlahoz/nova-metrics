@@ -9,8 +9,9 @@ use Jdlabs\NovaMetrics\Traits\Chartable;
 use Laravel\Nova\Card;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\PartitionResult;
+use Laravel\Nova\Metrics\Trend;
 
-class BarChart extends Partition
+class BarChart extends Trend
 {
     use Chartable;
 
@@ -19,7 +20,7 @@ class BarChart extends Partition
      *
      * @var string
      */
-    public $width = '1/2';
+    public $width = '1/3';
 
     /**
      * Height of the card
@@ -35,7 +36,7 @@ class BarChart extends Partition
      */
     public function component()
     {
-        return 'JdlabsBarChart';
+        return 'DynamicBarChartMetric';
     }
 
     /**
@@ -45,7 +46,7 @@ class BarChart extends Partition
      */
     protected function id()
     {
-        return 'jdlabs-barchart';
+        return 'jdlabs-barmetric';
     }
 
     /**
@@ -75,42 +76,14 @@ class BarChart extends Partition
      *
      * @return array|void
      */
-//    public function meta()
-//    {
-//        $request = request();
-//        return [
-//            'meta' => [
-//                'chart' => [
-//                    'id' => $this->id()
-//                ],
-//                'height' => $this->getHeight(),
-//                'colors' => $this->colors(),
-//                'responsive' => [
-//                    [
-//                        'breakpoint' => 1360,
-//                        'options' => [
-//                            'chart' => [
-//                                'height' => $this->getHeight()
-//                            ],
-//                            'legend' => [
-//                                'position' => 'left'
-//                            ]
-//                        ]
-//                    ],
-//                    [
-//                        'breakpoint' => 992,
-//                        'options' => [
-//                            'chart' => [
-//                                'height' => $this->getHeight()
-//                            ],
-//                            'legend' => [
-//                                'position' => 'left'
-//                            ]
-//                        ]
-//                    ]
-//                ]
-//            ]
-//        ];
-//    }
+    public function meta()
+    {
+        return [
+            'meta' => [
+                'colors' => $this->colors(),
+                'cardHeight' => $this->getHeight(),
+            ]
+        ];
+    }
 
 }

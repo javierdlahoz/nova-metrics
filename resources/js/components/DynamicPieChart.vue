@@ -1,5 +1,5 @@
 <template>
-    <JdlabsPieChart
+    <JdlabsPieMetric
         :title="card.name"
         :help-text="card.helpText"
         :help-width="card.helpWidth"
@@ -11,7 +11,7 @@
 
 <script>
 import { Minimum } from 'laravel-nova'
-import JdlabsPieChart from './Base/PieChart'
+import JdlabsPieMetric from './Base/PieMetric'
 import MetricBehavior from './MetricBehavior'
 import Chartable from '../mixins/Chartable'
 
@@ -19,7 +19,7 @@ export default {
     mixins: [MetricBehavior, Chartable],
 
     components: {
-        JdlabsPieChart,
+        JdlabsPieMetric,
     },
 
     props: {

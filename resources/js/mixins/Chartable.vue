@@ -65,6 +65,19 @@ export default {
                 return `/nova-api/metrics/${this.card.uriKey}`
             }
         },
+        chartHeight() {
+            return this.card.meta.cardHeight === 150 ? '90px' : `${this.card.meta.cardHeight - 65}px`;
+        },
+        chartWidth() {
+            const widths = {
+                full: '50%',
+                '1/2': '40%' ,
+                '1/3': '90px',
+                '1/4': '90px'
+            };
+
+            return widths[this.card.width];
+        },
     }
 }
 </script>

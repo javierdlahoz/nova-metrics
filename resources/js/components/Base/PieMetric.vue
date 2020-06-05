@@ -55,8 +55,10 @@
 <script>
 import Chartist from 'chartist'
 import 'chartist/dist/chartist.min.css'
+import Chartable from '../../mixins/Chartable'
 
 export default {
+    mixins: [Chartable],
     props: {
         loading: Boolean,
         title: String,
@@ -75,7 +77,6 @@ export default {
     },
 
     mounted() {
-        console.log(this.card);
         this.chartist = new Chartist.Pie(
             this.$refs.chart,
             this.formattedChartData,
@@ -157,21 +158,6 @@ export default {
 
         formattedTotal() {
             return _.sumBy(this.chartData, 'value')
-        },
-
-        chartHeight() {
-            return this.card.meta.cardHeight === 150 ? '90px' : `${this.card.meta.cardHeight - 65}px`;
-        },
-
-        chartWidth() {
-            const widths = {
-                full: '50%',
-                '1/2': '40%' ,
-                '1/3': '90px',
-                '1/4': '90px'
-            };
-
-            return widths[this.card.width];
         },
 
         donutWidth() {
