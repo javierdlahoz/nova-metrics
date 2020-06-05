@@ -20,7 +20,7 @@ class PieChart extends Partition
      *
      * @var string
      */
-    public $width = '1/2';
+    public $width = '1/3';
 
     /**
      * Card's height
@@ -74,7 +74,42 @@ class PieChart extends Partition
             '#6474D7',
             '#9C6ADE',
             '#E471DE',
+            '#25ccf7',
+            '#eab543',
+            '#3b3b98',
+            '#bdc581',
+            '#f97f51',
+            '#55e6c1',
+            '#f8efba',
+            '#2c3a47',
+            '#b33771',
+            '#d6a2e8',
+            '#1f8465'
         ];
+    }
+
+    /**
+     * Set the height of the card
+     *
+     * @param  int $height
+     * @return $this
+     */
+    public function height(int $height = 1)
+    {
+        $this->height = $height;
+        return $this;
+    }
+
+    /**
+     * Set donut value
+     *
+     * @param  bool $donut
+     * @return $this
+     */
+    public function donut(bool $donut = true)
+    {
+        $this->donut = $donut;
+        return $this;
     }
 
     /**

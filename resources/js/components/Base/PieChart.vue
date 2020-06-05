@@ -1,5 +1,6 @@
 <template>
-    <loading-card :loading="loading" class="px-6 py-4 jdlabs-pie">
+    <loading-card :loading="loading" class="px-6 py-4 jdlabs-pie"
+                  v-bind:style="{'height': `${card.meta.cardHeight}px`}">
         <h3 class="flex mb-3 text-base text-80 font-bold">
             {{ title }}
 
@@ -26,7 +27,7 @@
             </tooltip>
         </div>
 
-        <div class="overflow-hidden overflow-y-auto max-h-90px">
+        <div class="overflow-hidden overflow-y-auto" v-bind:style="{maxHeight: chartHeight}">
             <ul class="list-reset">
                 <li
                     v-for="item in formattedItems"
@@ -35,7 +36,7 @@
           <span
               class="inline-block rounded-full w-2 h-2 mr-2"
               :style="{
-              backgroundColor: item.color,
+              backgroundColor: item.color
             }"
           />{{ item.label }} ({{ item.value }} - {{ item.percentage }}%)
                 </li>
@@ -45,7 +46,8 @@
         <div
             ref="chart"
             :class="chartClasses"
-            style="width: 90px; height: 90px; right: 20px; bottom: 30px; top: calc(50% + 15px);"
+            v-bind:style="{'height': chartHeight, 'width': chartWidth}"
+            style="right: 10px; bottom: 30px; top: calc(50% + 15px);"
         />
     </loading-card>
 </template>
@@ -73,12 +75,13 @@ export default {
     },
 
     mounted() {
+        console.log(this.card);
         this.chartist = new Chartist.Pie(
             this.$refs.chart,
             this.formattedChartData,
             {
                 donut: this.card.meta.donut,
-                donutWidth: 10,
+                donutWidth: this.donutWidth,
                 donutSolid: true,
                 startAngle: 270,
                 showLabel: false,
@@ -155,6 +158,32 @@ export default {
         formattedTotal() {
             return _.sumBy(this.chartData, 'value')
         },
+
+        chartHeight() {
+            return this.card.meta.cardHeight === 150 ? '90px' : `${this.card.meta.cardHeight - 65}px`;
+        },
+
+        chartWidth() {
+            const widths = {
+                full: '50%',
+                '1/2': '40%' ,
+                '1/3': '90px',
+                '1/4': '90px'
+            };
+
+            return widths[this.card.width];
+        },
+
+        donutWidth() {
+            const widths = {
+                full: 50,
+                '1/2': 25,
+                '1/3': 10,
+                '1/4': 10
+            };
+
+            return widths[this.card.width];
+        }
     },
 }
 </script>
