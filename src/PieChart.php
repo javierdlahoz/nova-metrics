@@ -30,13 +30,20 @@ class PieChart extends Partition
     public $height = 1;
 
     /**
+     * Set if wants to display donut or not
+     *
+     * @var bool
+     */
+    public $donut = false;
+
+    /**
      * Get the component name for the element.
      *
      * @return string
      */
     public function component()
     {
-        return 'JdlabsPieChart';
+        return 'DynamicPieChartMetric';
     }
 
     /**
@@ -57,17 +64,16 @@ class PieChart extends Partition
     protected function colors()
     {
         return [
-            '#25ccf7',
-            '#eab543',
-            '#3b3b98',
-            '#bdc581',
-            '#f97f51',
-            '#55e6c1',
-            '#f8efba',
-            '#2c3a47',
-            '#b33771',
-            '#d6a2e8',
-            '#1f8465'
+            '#F5573B',
+            '#F99037',
+            '#F2CB22',
+            '#8FC15D',
+            '#098F56',
+            '#47C1BF',
+            '#1693EB',
+            '#6474D7',
+            '#9C6ADE',
+            '#E471DE',
         ];
     }
 
@@ -78,17 +84,11 @@ class PieChart extends Partition
      */
     public function meta()
     {
-        $request = request();
         return [
             'meta' => [
-                'chart' => [
-                    'id' => $this->id()
-                ],
                 'colors' => $this->colors(),
                 'cardHeight' => $this->getHeight(),
-                'legend' => [
-                    'position' => 'left'
-                ]
+                'donut' => $this->donut
             ]
         ];
     }

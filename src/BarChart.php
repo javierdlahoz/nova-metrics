@@ -75,42 +75,42 @@ class BarChart extends Partition
      *
      * @return array|void
      */
-    public function meta()
-    {
-        $request = request();
-        return [
-            'meta' => [
-                'chart' => [
-                    'id' => $this->id()
-                ],
-                'height' => $this->getHeight(),
-                'colors' => $this->colors(),
-                'responsive' => [
-                    [
-                        'breakpoint' => 1360,
-                        'options' => [
-                            'chart' => [
-                                'height' => $this->getHeight()
-                            ],
-                            'legend' => [
-                                'position' => 'left'
-                            ]
-                        ]
-                    ],
-                    [
-                        'breakpoint' => 992,
-                        'options' => [
-                            'chart' => [
-                                'height' => $this->getHeight()
-                            ],
-                            'legend' => [
-                                'position' => 'left'
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-        ];
-    }
+//    public function meta()
+//    {
+//        $request = request();
+//        return [
+//            'meta' => [
+//                'chart' => [
+//                    'id' => $this->id()
+//                ],
+//                'height' => $this->getHeight(),
+//                'colors' => $this->colors(),
+//                'responsive' => [
+//                    [
+//                        'breakpoint' => 1360,
+//                        'options' => [
+//                            'chart' => [
+//                                'height' => $this->getHeight()
+//                            ],
+//                            'legend' => [
+//                                'position' => 'left'
+//                            ]
+//                        ]
+//                    ],
+//                    [
+//                        'breakpoint' => 992,
+//                        'options' => [
+//                            'chart' => [
+//                                'height' => $this->getHeight()
+//                            ],
+//                            'legend' => [
+//                                'position' => 'left'
+//                            ]
+//                        ]
+//                    ]
+//                ]
+//            ]
+//        ];
+//    }
 
 }

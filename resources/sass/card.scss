@@ -1,23 +1,26 @@
 // Nova Card CSS
 .jdlabs-card {
 
-    .chart-wrapper {
-        div:first-child {
-            //width: 100% !important;
-        }
-    }
-
     .apexcharts-canvas {
         svg:not(:root) {
             overflow: visible;
         }
-        //width: 100% !important;
     }
-    //&.card-panel {
-    //    height: unset;
-    //}
-    //
-    //.chart-wrapper {
-    //    min-height: 340px;
-    //}
+}
+
+.jdlabs-pie {
+    .overflow-y-auto {
+        &::-webkit-scrollbar
+        {
+            width: 3px;
+            background-color: #F5F5F5;
+        }
+
+        &::-webkit-scrollbar-thumb
+        {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+            background-color: #ccc;
+        }
+    }
 }

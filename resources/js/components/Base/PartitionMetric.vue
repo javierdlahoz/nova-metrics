@@ -92,7 +92,7 @@ export default {
       this.$refs.chart,
       this.formattedChartData,
       {
-        donut: true,
+        donut: false,
         donutWidth: 10,
         donutSolid: true,
         startAngle: 270,
