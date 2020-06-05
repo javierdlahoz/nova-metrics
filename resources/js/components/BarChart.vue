@@ -7,7 +7,7 @@
         <div v-if="chartOptions && chartData && series.length > 0" class="chart-wrapper">
             <apexchart
                 width="100%"
-                height="400"
+                height="100%"
                 type="bar"
                 :options="chartOptions"
                 :series="series"></apexchart>

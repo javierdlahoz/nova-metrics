@@ -5,18 +5,28 @@ namespace Jdlabs\NovaMetrics;
 
 
 use Illuminate\Http\Request;
+use Jdlabs\NovaMetrics\Traits\Chartable;
 use Laravel\Nova\Card;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\PartitionResult;
 
 class BarChart extends Partition
 {
+    use Chartable;
+
     /**
      * The width of the card (1/3, 1/2, or full).
      *
      * @var string
      */
     public $width = '1/2';
+
+    /**
+     * Height of the card
+     *
+     * @var int
+     */
+    public $height = 1;
 
     /**
      * Get the component name for the element.
@@ -73,16 +83,17 @@ class BarChart extends Partition
                 'chart' => [
                     'id' => $this->id()
                 ],
+                'height' => $this->getHeight(),
                 'colors' => $this->colors(),
                 'responsive' => [
                     [
                         'breakpoint' => 1360,
                         'options' => [
                             'chart' => [
-                                'height' => 320
+                                'height' => $this->getHeight()
                             ],
                             'legend' => [
-                                'position' => 'bottom'
+                                'position' => 'left'
                             ]
                         ]
                     ],
@@ -90,10 +101,10 @@ class BarChart extends Partition
                         'breakpoint' => 992,
                         'options' => [
                             'chart' => [
-                                'height' => 320
+                                'height' => $this->getHeight()
                             ],
                             'legend' => [
-                                'position' => 'bottom'
+                                'position' => 'left'
                             ]
                         ]
                     ]
