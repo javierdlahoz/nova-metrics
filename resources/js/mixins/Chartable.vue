@@ -46,7 +46,25 @@ export default {
         },
         formattedTotal () {
             return this.chartData.reduce((prev, data) => prev + (data.value || 0), 0);
-        }
+        },
+        metricPayload() {
+            let payload = { params: {} };
+            if (this.resourceName) {
+                const filters = this.$route.query[`${this.resourceName}_filter`];
+                payload.params.filters = filters;
+            }
+            return payload;
+        },
+        metricEndpoint() {
+            const lens = this.lens !== '' ? `/lens/${this.lens}` : ''
+            if (this.resourceName && this.resourceId) {
+                return `/nova-api/${this.resourceName}${lens}/${this.resourceId}/metrics/${this.card.uriKey}`
+            } else if (this.resourceName) {
+                return `/nova-api/${this.resourceName}${lens}/metrics/${this.card.uriKey}`
+            } else {
+                return `/nova-api/metrics/${this.card.uriKey}`
+            }
+        },
     }
 }
 </script>
