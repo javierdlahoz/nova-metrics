@@ -1,4 +1,1 @@
-.jdlabs-card .apexcharts-canvas svg:not(:root) {
-  overflow: visible;
-}
-
+.jdlabs-card .apexcharts-canvas svg:not(:root){overflow:visible}
