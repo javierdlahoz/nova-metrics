@@ -1,33 +1,25 @@
 <template>
-    <JdLabsBarMetric
-        @selected="handleRangeSelected"
+    <JdlabsBarMetric
         :title="card.name"
         :help-text="card.helpText"
         :help-width="card.helpWidth"
-        :value="value"
-        :chart-data="data"
-        :ranges="card.ranges"
-        :format="format"
-        :prefix="prefix"
-        :suffix="suffix"
-        :card="card"
-        :suffix-inflection="suffixInflection"
-        :selected-range-key="selectedRangeKey"
+        :chart-data="chartData"
         :loading="loading"
+        :card="card"
     />
 </template>
 
 <script>
-import _ from 'lodash'
-import { InteractsWithDates, Minimum } from 'laravel-nova'
+import { Minimum } from 'laravel-nova'
+import JdlabsBarMetric from './Base/BarMetric'
 import MetricBehavior from './MetricBehavior'
-import JdLabsBarMetric from './Base/BarMetric'
+import Chartable from '../mixins/Chartable'
 
 export default {
-    mixins: [InteractsWithDates, MetricBehavior],
+    mixins: [MetricBehavior, Chartable],
 
     components: {
-        JdLabsBarMetric,
+        JdlabsBarMetric,
     },
 
     props: {
@@ -54,123 +46,41 @@ export default {
 
     data: () => ({
         loading: true,
-        value: '',
-        data: [],
-        format: '(0[.]00a)',
-        prefix: '',
-        suffix: '',
-        suffixInflection: true,
-        selectedRangeKey: null,
+        chartData: [],
     }),
 
     watch: {
-        resourceId () {
+        resourceId() {
             this.fetch()
         },
     },
 
-    created () {
-        if (this.hasRanges) {
-            this.selectedRangeKey = this.card.ranges[0].value
-        }
+    created() {
+        this.fetch();
 
         if (this.card.refreshWhenActionRuns) {
-            Nova.$on('action-executed', () => this.fetch())
+            Nova.$on("action-executed", () => this.fetch());
         }
 
         if (this.resourceName) {
-            Nova.$on('resources-loaded', () => this.fetch())
+            Nova.$on("resources-loaded", () => this.fetch());
         }
     },
 
-    mounted () {
-        console.log(this.card)
-        this.fetch()
-    },
-
     methods: {
-        handleRangeSelected (key) {
-            this.selectedRangeKey = key
-            this.fetch()
-        },
-
-        fetch () {
-            this.loading = true
-
+        fetch() {
+            this.loading = true;
             Minimum(Nova.request().get(this.metricEndpoint, this.metricPayload)).then(
                 ({
                     data: {
-                        value: {
-                            labels,
-                            trend,
-                            value,
-                            prefix,
-                            suffix,
-                            suffixInflection,
-                            format,
-                        },
-                    },
-                }) => {
-                    this.value = value
-                    this.labels = Object.keys(trend)
-                    this.data = {
-                        labels: Object.keys(trend),
-                        series: [
-                            _.map(trend, (value, label) => {
-                                return {
-                                    meta: label,
-                                    value: value,
-                                }
-                            }),
-                        ],
+                        value: { value }
                     }
-                    this.format = format || this.format
-                    this.prefix = prefix || this.prefix
-                    this.suffix = suffix || this.suffix
-                    this.suffixInflection = suffixInflection
-                    this.loading = false
+                }) => {
+                    this.chartData = value;
+                    this.loading = false;
                 }
-            )
-        },
-    },
-
-    computed: {
-        hasRanges () {
-            return this.card.ranges && this.card.ranges.length > 0
-        },
-
-        metricPayload () {
-            const payload = {
-                params: {
-                    timezone: this.userTimezone,
-                    twelveHourTime: this.usesTwelveHourTime
-                }
-            }
-
-            if (this.hasRanges) {
-                payload.params.range = this.selectedRangeKey
-            }
-
-            if (this.resourceName) {
-                const filters = this.$route.query[
-                    `${this.resourceName}_filter`
-                    ]
-                payload.params.filters = filters
-            }
-
-            return payload
-        },
-
-        metricEndpoint () {
-            const lens = this.lens !== '' ? `/lens/${this.lens}` : ''
-            if (this.resourceName && this.resourceId) {
-                return `/nova-api/${this.resourceName}${lens}/${this.resourceId}/metrics/${this.card.uriKey}`
-            } else if (this.resourceName) {
-                return `/nova-api/${this.resourceName}${lens}/metrics/${this.card.uriKey}`
-            } else {
-                return `/nova-api/metrics/${this.card.uriKey}`
-            }
-        },
-    },
+            );
+        }
+    }
 }
 </script>

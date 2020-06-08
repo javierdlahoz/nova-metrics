@@ -4,14 +4,16 @@
 namespace Jdlabs\NovaMetrics;
 
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Jdlabs\NovaMetrics\Traits\Chartable;
 use Laravel\Nova\Card;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\PartitionResult;
 use Laravel\Nova\Metrics\Trend;
 
-class BarChart extends Trend
+class BarChart extends MultipleValuesMetric
 {
     use Chartable;
 
@@ -27,7 +29,14 @@ class BarChart extends Trend
      *
      * @var int
      */
-    public $height = 1;
+    public $height = 2;
+
+    /**
+     * Chart's type
+     *
+     * @var string
+     */
+    public $chartType = 'bar';
 
     /**
      * Get the component name for the element.
@@ -72,6 +81,18 @@ class BarChart extends Trend
     }
 
     /**
+     * Set the height of the card
+     *
+     * @param  int $height
+     * @return $this
+     */
+    public function height(int $height = 1)
+    {
+        $this->height = $height;
+        return $this;
+    }
+
+    /**
      * Return the meta data to be used on the pie charts
      *
      * @return array|void
@@ -79,10 +100,11 @@ class BarChart extends Trend
     public function meta()
     {
         return [
-            'meta' => [
+            'meta' => array_merge([
                 'colors' => $this->colors(),
                 'cardHeight' => $this->getHeight(),
-            ]
+                'chartType' => $this->chartType
+            ], $this->withMeta([]))
         ];
     }
 
