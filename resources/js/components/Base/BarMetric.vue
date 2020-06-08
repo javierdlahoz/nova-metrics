@@ -20,139 +20,106 @@
                     />
                 </tooltip>
             </div>
-
-            <select
-                v-if="ranges.length > 0"
-                @change="handleChange"
-                class="select-box-sm ml-auto min-w-24 h-6 text-xs appearance-none bg-40 pl-2 pr-6 active:outline-none active:shadow-outline focus:outline-none focus:shadow-outline"
-            >
-                <option
-                    v-for="option in ranges"
-                    :key="option.value"
-                    :value="option.value"
-                    :selected="selectedRangeKey == option.value"
-                >
-                    {{ option.label }}
-                </option>
-            </select>
         </div>
-
-        <div
-            ref="chart"
-            class="absolute pin rounded-b-lg ct-chart"
-            style="top: 40px"
-            v-bind:style="{'height': chartHeight}"
-        />
+        <div id="chart" v-if="series && series.length > 0">
+            <apexchart type="bar" v-bind:height="chartHeight" :options="chartOptions" :series="series"></apexchart>
+        </div>
     </loading-card>
 </template>
 
 <script>
-import numbro from 'numbro'
-import numbroLanguages from 'numbro/dist/languages.min'
-
-Object.values(numbroLanguages).forEach(l => numbro.registerLanguage(l))
 import _ from 'lodash'
-import Chartist from 'chartist'
-import 'chartist-plugin-tooltips'
-import 'chartist/dist/chartist.min.css'
-import { SingularOrPlural } from 'laravel-nova'
-import 'chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css'
 import Chartable from '../../mixins/Chartable'
+import apexcharts from 'vue-apexcharts'
 
 export default {
     mixins: [Chartable],
 
+    component: [apexcharts],
+
     props: {
         loading: Boolean,
         title: {},
-        helpText: {},
-        helpWidth: {},
         value: {},
         card: Object,
         chartData: {},
         maxWidth: {},
-        prefix: '',
-        suffix: '',
-        suffixInflection: true,
-        ranges: { type: Array, default: () => [] },
-        selectedRangeKey: [String, Number],
-        format: {
-            type: String,
-            default: '0[.]00a',
-        },
-    },
-
-    data: () => ({ chartist: null }),
-
-    watch: {
-        selectedRangeKey: function (newRange, oldRange) {
-            this.renderChart()
-        },
-
-        chartData: function (newData, oldData) {
-            this.renderChart()
-        },
-    },
-
-    mounted () {
-        if (Nova.config.locale) {
-            numbro.setLanguage(Nova.config.locale.replace('_', '-'))
-        }
-
-        const low = Math.min(...this.chartData)
-        const high = Math.max(...this.chartData)
-
-        // Use zero as the graph base if the lowest value is greater than or equal to zero.
-        // This avoids the awkward situation where the chart doesn't appear filled in.
-        const areaBase = low >= 0 ? 0 : low
-
-        this.formatChartData()
-        this.chartist = new Chartist.Bar(this.$refs.chart, this.chartData)
     },
 
     methods: {
-        renderChart () {
-            this.formatChartData()
-            this.chartist.update(this.chartData)
-        },
-
         handleChange (event) {
             this.$emit('selected', event.target.value)
         },
 
-        formatChartData() {
-            if (this.chartData.series && this.chartData.series.length > 0) {
-                let series = []
-                this.chartData.series.forEach((serie) => {
-                    series.push(serie.map((item) => {return item.value}))
-                })
-                this.chartData.series = series
-            }
-        }
+        getItemColor (item, index) {
+            return typeof item.color === 'string' ? item.color : this.card.meta.colors[index]
+        },
     },
 
     computed: {
-        isNullValue () {
+        chartOptions() {
+            return {
+                chart: {
+                    type: 'bar',
+                    height: this.chartHeight,
+                    toolbar: {
+                        show: false
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: this.card.meta.chartType === 'bar',
+                        columnWidth: '55%',
+                        endingShape: 'rounded'
+                    },
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    show: true,
+                    width: 2,
+                    colors: ['transparent']
+                },
+                xaxis: {
+                    categories: this.formattedLabels,
+                },
+                yaxis: {
+                    title: {
+                        text: this.card.meta['y-axis'] ? this.card.meta['y-axis'] : 'Value'
+                    }
+                }
+            }
+        },
+
+        isNullValue() {
             return this.value == null
         },
 
-        formattedValue () {
-            if (!this.isNullValue) {
-                const value = numbro(new String(this.value)).format(this.format)
-
-                return `${this.prefix}${value}`
+        series() {
+            const series = _(this.chartData).map(item => item.values).value()
+            let formattedSeries = []
+            if (series[0]) {
+                Array(series[0].length).fill().map((_, i) => i * i).forEach(index => {
+                    formattedSeries.push({
+                        name: this.card.meta.labels && this.card.meta.labels[index] ? this.card.meta.labels[index] : `serie ${index + 1}`,
+                        data: _(series).map(item => item[index]).value()
+                    })
+                })
             }
 
-            return ''
+            return formattedSeries
         },
 
-        formattedSuffix () {
-            if (this.suffixInflection === false) {
-                return this.suffix
-            }
-
-            return SingularOrPlural(this.value, this.suffix)
+        formattedLabels() {
+            return _(this.chartData)
+                .map(item => item.label)
+                .value()
         },
+
+        chartHeight() {
+            return `${this.card.meta.cardHeight - 65}px`
+        }
     },
 }
 </script>
