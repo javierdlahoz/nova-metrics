@@ -5,6 +5,7 @@ Nova.booting((Vue, router, store) => {
     Vue.component('DynamicPieChartMetric', require('./components/DynamicPieChart').default)
     Vue.component('DynamicBarChartMetric', require('./components/DynamicBarChart').default)
     Vue.component('DynamicAdvancedTrendMetric', require('./components/DynamicAdvancedTrendMetric').default)
+    Vue.component('JdlabsGroupedMetrics', require('./components/GroupedMetrics').default)
 
     Vue.component('JdlabsPieMetric', require('./components/Base/PieMetric').default)
     Vue.component('JdlabsBarMetric', require('./components/Base/BarMetric').default)

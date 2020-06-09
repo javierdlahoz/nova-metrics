@@ -16,7 +16,7 @@ class AdvancedTrend extends Trend
      *
      * @var string
      */
-    public $width = '2/3';
+    public $width = '1/2';
 
     /**
      * Card's height

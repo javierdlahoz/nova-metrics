@@ -1,0 +1,26 @@
+<template>
+    <div v-if="cards.length > 0">
+        <cards :cards="cards" class="mb-3" size="large" />
+    </div>
+</template>
+
+<script>
+import Chartable from '../mixins/Chartable'
+
+export default {
+    mixins: [Chartable],
+
+    props: {
+        card: {
+            type: Object,
+            required: true,
+        }
+    },
+
+    computed: {
+        cards() {
+            return this.card.meta.cards
+        }
+    }
+}
+</script>

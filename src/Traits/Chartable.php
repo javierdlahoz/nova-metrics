@@ -26,7 +26,7 @@ trait Chartable
      */
     public function getHeight()
     {
-        return $this->height === 1 ? static::$cardHeight : ($this->height * (static::$cardHeight + static::$cardOffset));
+        return ($this->height * static::$cardHeight) + (static::$cardOffset * ($this->height - 1));
     }
 
     /**
