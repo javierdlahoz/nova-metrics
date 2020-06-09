@@ -39,10 +39,10 @@ class AdvancedTrend extends Trend
      */
     public function meta()
     {
-        return [
+        return array_merge([
             'meta' => [
                 'cardHeight' => $this->getHeight(),
             ]
-        ];
+        ], $this->withMeta([]));
     }
 }

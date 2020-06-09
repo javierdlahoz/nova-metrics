@@ -40,4 +40,15 @@ trait Chartable
         $this->height = $height;
         return $this;
     }
+
+    /**
+     * Return with meta attribute
+     *
+     * @param  array $meta
+     * @return array
+     */
+    public function withMeta(array $meta)
+    {
+        return $meta;
+    }
 }

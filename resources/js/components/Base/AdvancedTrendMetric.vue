@@ -67,17 +67,7 @@ export default {
         suffix: '',
         suffixInflection: true,
         ranges: { type: Array, default: () => [] },
-        selectedRangeKey: [String, Number],
-        format: {
-            type: String,
-            default: '0[.]00a',
-        },
-    },
-
-    watch: {
-        selectedRangeKey: function (newRange, oldRange) {
-            // this.renderChart()
-        }
+        selectedRangeKey: [String, Number]
     },
 
     methods: {
@@ -192,9 +182,13 @@ export default {
                 },
                 tooltip: {
                     x: {
-                        format: 'dd MMM yyyy'
+                        format: 'dd MMM yyyy',
                     },
-                    label: 'value'
+                    y: {
+                        title: {
+                            formatter: (serie) => 'Value'
+                        }
+                    }
                 },
                 fill: {
                     type: 'gradient',
