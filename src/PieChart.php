@@ -89,18 +89,6 @@ class PieChart extends Partition
     }
 
     /**
-     * Set the height of the card
-     *
-     * @param  int $height
-     * @return $this
-     */
-    public function height(int $height = 1)
-    {
-        $this->height = $height;
-        return $this;
-    }
-
-    /**
      * Set donut value
      *
      * @param  bool $donut

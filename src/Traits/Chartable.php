@@ -28,4 +28,16 @@ trait Chartable
     {
         return $this->height === 1 ? static::$cardHeight : ($this->height * (static::$cardHeight + static::$cardOffset));
     }
+
+    /**
+     * Set the height of the chart
+     *
+     * @param  int $height
+     * @return $this
+     */
+    public function height($height = 1)
+    {
+        $this->height = $height;
+        return $this;
+    }
 }
