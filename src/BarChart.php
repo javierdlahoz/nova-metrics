@@ -91,7 +91,8 @@ class BarChart extends MultipleValuesMetric
             'meta' => array_merge([
                 'colors' => $this->colors(),
                 'cardHeight' => $this->getHeight(),
-                'chartType' => $this->chartType
+                'chartType' => $this->chartType,
+                'seriesLabels' => $this->seriesLabels
             ], $this->withMeta([]))
         ];
     }

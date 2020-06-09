@@ -6,10 +6,13 @@ namespace Jdlabs\NovaMetrics;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Jdlabs\NovaMetrics\Traits\Seriable;
 use Laravel\Nova\Metrics\Partition;
 
 class MultipleValuesMetric extends Partition
 {
+    use Seriable;
+
     /**
      * Return a partition result showing the segments of a aggregate.
      *
