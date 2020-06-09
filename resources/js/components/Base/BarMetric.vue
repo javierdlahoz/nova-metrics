@@ -115,10 +115,6 @@ export default {
             return _(this.chartData)
                 .map(item => item.label)
                 .value()
-        },
-
-        chartHeight() {
-            return `${this.card.meta.cardHeight - 65}px`
         }
     },
 }

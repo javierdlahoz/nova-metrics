@@ -81,18 +81,6 @@ class BarChart extends MultipleValuesMetric
     }
 
     /**
-     * Set the height of the card
-     *
-     * @param  int $height
-     * @return $this
-     */
-    public function height(int $height = 1)
-    {
-        $this->height = $height;
-        return $this;
-    }
-
-    /**
      * Return the meta data to be used on the pie charts
      *
      * @return array|void

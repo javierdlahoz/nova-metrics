@@ -26,6 +26,29 @@ trait Chartable
      */
     public function getHeight()
     {
-        return $this->height === 1 ? static::$cardHeight : ($this->height * (static::$cardHeight + static::$cardOffset));
+        return ($this->height * static::$cardHeight) + (static::$cardOffset * ($this->height - 1));
+    }
+
+    /**
+     * Set the height of the chart
+     *
+     * @param  int $height
+     * @return $this
+     */
+    public function height($height = 1)
+    {
+        $this->height = $height;
+        return $this;
+    }
+
+    /**
+     * Return with meta attribute
+     *
+     * @param  array $meta
+     * @return array
+     */
+    public function withMeta(array $meta)
+    {
+        return $meta;
     }
 }
