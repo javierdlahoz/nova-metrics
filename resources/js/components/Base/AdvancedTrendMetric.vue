@@ -1,7 +1,7 @@
 <template>
     <loading-card :loading="loading" class="px-6 py-4" v-bind:style="{'height': `${card.meta.cardHeight}px`}">
         <div class="flex mb-4">
-            <h3 class="mr-3 text-base text-80 font-bold">{{ title }}</h3>
+            <h3 class="mr-3 text-base text-80 font-bold flex-1">{{ title }}</h3>
 
             <div v-if="helpText" class="absolute pin-r pin-b p-2 z-50">
                 <tooltip trigger="click">
@@ -21,6 +21,15 @@
                 </tooltip>
             </div>
 
+            <div @click="resetZoom()" class="flex justify-center items-center mr-2">
+                <icon
+                    type="search"
+                    viewBox="0 0 17 17"
+                    height="16"
+                    width="16"
+                    class="cursor-pointer text-60 -mb-1"
+                />
+            </div>
             <select
                 v-if="ranges.length > 0"
                 @change="handleChange"
@@ -37,7 +46,7 @@
             </select>
         </div>
 
-        <div id="chart-timeline" v-if="chartData && chartData.series">
+        <div id="chart-timeline" v-if="chartData && chartData.series && !reseted">
             <apexchart type="area" v-bind:height="chartHeight" ref="chart" :options="chartOptions" :series="series"></apexchart>
         </div>
     </loading-card>
@@ -53,6 +62,12 @@ export default {
     name: 'AdvancedTrendMetric',
 
     mixins: [Charteable, Trendable],
+
+    data() {
+        return {
+            reseted: false
+        }
+    },
 
     props: {
         loading: Boolean,
@@ -70,10 +85,22 @@ export default {
         selectedRangeKey: [String, Number]
     },
 
+    created() {
+        console.log(this.card.meta)
+    },
+
     methods: {
         handleChange (event) {
             this.$emit('selected', event.target.value)
         },
+
+        resetZoom() {
+            this.reseted = true
+
+            setTimeout(() => {
+                this.reseted = false
+            }, 150)
+        }
     },
 
     computed: {
@@ -137,48 +164,43 @@ export default {
                         }
                     },
                     toolbar: {
-                        show: true,
-                        tools: {
-                            download: false,
-                            selection: false,
-                            zoom: false,
-                            zoomin: true,
-                            zoomout: true,
-                            pan: false,
-                            reset: true
-                        },
+                        show: false
                     }
                 },
-                annotations: {
-                    yaxis: [{
-                        y: 30,
-                        borderColor: '#999',
-                        label: {
-                            show: true,
-                            text: 'Support',
-                            style: {
-                                color: '#fff',
-                                background: '#00E396'
-                            }
-                        }
-                    }],
-                    xaxis: [{
-                        x: this.minDate.getTime(),
-                        borderColor: '#999',
-                        yAxisIndex: 0
-                    }]
-                },
+                // annotations: {
+                //     yaxis: [{
+                //         y: 30,
+                //         borderColor: '#999',
+                //         label: {
+                //             show: true,
+                //             text: 'Support',
+                //             style: {
+                //                 color: '#fff',
+                //                 background: '#00E396'
+                //             }
+                //         }
+                //     }],
+                //     xaxis: [{
+                //         x: this.minDate.getTime(),
+                //         borderColor: '#999',
+                //         yAxisIndex: 0
+                //     }]
+                // },
                 dataLabels: {
                     enabled: false
                 },
                 markers: {
                     size: 0,
-                    style: 'hollow',
+                    style: 'solid',
                 },
                 xaxis: {
+                    show: false,
                     type: 'datetime',
                     min: this.minDate.getTime(),
                     tickAmount: 6,
+                },
+                yaxis: {
+                    show: false
                 },
                 tooltip: {
                     x: {

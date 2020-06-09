@@ -1,5 +1,5 @@
 <template>
-    <div v-if="cards.length > 0">
+    <div v-if="cards.length > 0" class="grouped-cards-wrapper">
         <cards :cards="cards" class="mb-3" size="large" />
     </div>
 </template>

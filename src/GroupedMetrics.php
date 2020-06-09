@@ -39,6 +39,7 @@ class GroupedMetrics extends Metric
     public function __construct(array $cards)
     {
         $this->cards = $cards;
+        $this->height(count($cards));
     }
 
     /**
