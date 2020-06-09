@@ -30,3 +30,28 @@
         min-height: 150px;
     }
 }
+
+.advanced-trend-card {
+    overflow: hidden;
+
+    .advanced-trend {
+        margin: -35px;
+        margin-bottom: 0;
+
+        .apexcharts-xaxis {
+            display: none;
+        }
+
+        .apexcharts-xaxis-label {
+            display: none;
+        }
+
+        .apexcharts-xaxistooltip-bottom {
+            display: none;
+        }
+
+        .apexcharts-grid {
+            display: none;
+        }
+    }
+}

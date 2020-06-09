@@ -1,5 +1,5 @@
 <template>
-    <loading-card :loading="loading" class="px-6 py-4" v-bind:style="{'height': `${card.meta.cardHeight}px`}">
+    <loading-card :loading="loading" class="px-6 py-4 advanced-trend-card" v-bind:style="{'height': `${card.meta.cardHeight}px`}">
         <div class="flex mb-4">
             <h3 class="mr-3 text-base text-80 font-bold flex-1">{{ title }}</h3>
 
@@ -46,7 +46,12 @@
             </select>
         </div>
 
-        <div id="chart-timeline" v-if="chartData && chartData.series && !reseted">
+        <p class="flex items-center text-4xl mb-4">
+            {{ formattedValue }}
+            <span v-if="suffix" class="ml-2 text-sm font-bold text-80">{{ formattedSuffix }}</span>
+        </p>
+
+        <div id="chart-timeline" class="advanced-trend" v-if="chartData && chartData.series && !reseted">
             <apexchart type="area" v-bind:height="chartHeight" ref="chart" :options="chartOptions" :series="series"></apexchart>
         </div>
     </loading-card>
@@ -83,10 +88,6 @@ export default {
         suffixInflection: true,
         ranges: { type: Array, default: () => [] },
         selectedRangeKey: [String, Number]
-    },
-
-    created() {
-        console.log(this.card.meta)
     },
 
     methods: {
@@ -127,13 +128,8 @@ export default {
         },
 
         formattedValue () {
-            if (!this.isNullValue) {
-                const value = numbro(new String(this.value)).format(this.format)
-
-                return `${this.prefix}${value}`
-            }
-
-            return ''
+            const value = this.chartData.series ? this.chartData.series[0][this.chartData.series[0].length - 1].value : 0
+            return `${this.prefix}${value}`
         },
 
         formattedSuffix () {
@@ -197,7 +193,13 @@ export default {
                     show: false,
                     type: 'datetime',
                     min: this.minDate.getTime(),
-                    tickAmount: 6,
+                    tickAmount: 0,
+                    labels: {
+                        show: false
+                    },
+                    axisBorder: {
+                        show: false
+                    }
                 },
                 yaxis: {
                     show: false
