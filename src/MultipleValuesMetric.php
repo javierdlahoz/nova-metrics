@@ -36,7 +36,7 @@ class MultipleValuesMetric extends Partition
                 );
                 $query->selectRaw(DB::raw("{$function}({$wrappedColumn}) as aggregate_{$column}"));
             } elseif (is_callable($column)) {
-                $query->selectRaw($column());
+                $query = $column($query);
             }
         }
 

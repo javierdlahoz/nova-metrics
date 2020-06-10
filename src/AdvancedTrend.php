@@ -16,14 +16,14 @@ class AdvancedTrend extends Trend
      *
      * @var string
      */
-    public $width = '1/2';
+    public $width = '1/3';
 
     /**
      * Card's height
      *
      * @var int
      */
-    public $height = 2;
+    public $height = 1;
 
     /**
      * Vue's component

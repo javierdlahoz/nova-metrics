@@ -76,7 +76,7 @@ class TrendSeries extends Trend
                 $wrappedColumn = $query->getQuery()->getGrammar()->wrap($column);
                 $query->selectRaw(DB::raw("{$function}({$wrappedColumn}) as aggregate_{$column}"));
             } elseif (is_callable($column)) {
-                $query->selectRaw($column());
+                $query = $column($query);
             }
         }
 

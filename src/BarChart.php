@@ -29,7 +29,7 @@ class BarChart extends MultipleValuesMetric
      *
      * @var int
      */
-    public $height = 2;
+    public $height = 1;
 
     /**
      * Chart's type

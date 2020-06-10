@@ -15,7 +15,7 @@ class RadarChart extends BarChart
      *
      * @var int
      */
-    public $height = 2;
+    public $height = 1;
 
     /**
      * Card's width
