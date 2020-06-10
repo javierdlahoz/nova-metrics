@@ -34,8 +34,13 @@
 .advanced-trend-card {
     overflow: hidden;
 
+    .last-trend-value {
+        position: relative;
+        z-index: 10;
+    }
+
     .advanced-trend {
-        margin: -35px;
+        margin: -100px -35px;
         margin-bottom: 0;
 
         .apexcharts-xaxis {

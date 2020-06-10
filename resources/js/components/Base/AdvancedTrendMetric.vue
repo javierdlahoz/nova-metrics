@@ -46,7 +46,7 @@
             </select>
         </div>
 
-        <p class="flex items-center text-4xl mb-4">
+        <p class="flex items-center text-4xl mb-4 last-trend-value">
             {{ formattedValue }}
             <span v-if="suffix" class="ml-2 text-sm font-bold text-80">{{ formattedSuffix }}</span>
         </p>
@@ -210,7 +210,11 @@ export default {
             })
 
             return series
-        }
+        },
+
+        chartHeight() {
+            return `${this.card.meta.cardHeight}px`
+        },
     },
 }
 </script>
