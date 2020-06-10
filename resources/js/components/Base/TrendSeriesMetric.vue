@@ -45,13 +45,7 @@
                 </option>
             </select>
         </div>
-
-        <p class="flex items-center text-4xl mb-4">
-            {{ formattedValue }}
-            <span v-if="suffix" class="ml-2 text-sm font-bold text-80">{{ formattedSuffix }}</span>
-        </p>
-
-        <div id="chart-timeline" class="advanced-trend" v-if="chartData && chartData.series && !reseted">
+        <div class="advanced-trend trend-series" v-if="chartData && chartData.series && !reseted">
             <apexchart type="area" v-bind:height="chartHeight" ref="chart" :options="chartOptions" :series="series"></apexchart>
         </div>
     </loading-card>
@@ -64,8 +58,6 @@ import Charteable from '../../mixins/Chartable'
 import Trendable from '../../mixins/Trendable'
 
 export default {
-    name: 'AdvancedTrendMetric',
-
     mixins: [Charteable, Trendable],
 
     data() {
@@ -119,11 +111,6 @@ export default {
             return date
         },
 
-        formattedValue () {
-            const value = this.chartData.series ? this.chartData.series[0][this.chartData.series[0].length - 1].value : 0
-            return `${this.prefix}${value}`
-        },
-
         formattedSuffix () {
             if (this.suffixInflection === false) {
                 return this.suffix
@@ -135,7 +122,7 @@ export default {
         chartOptions () {
             return {
                 chart: {
-                    id: 'area-datetime',
+                    id: 'series-area-datetime',
                     type: 'area',
                     height: this.chartHeight,
                     zoom: {
@@ -144,6 +131,13 @@ export default {
                     toolbar: {
                         show: false
                     }
+                },
+                legend: {
+                    position: 'top',
+                    horizontalAlign: 'left'
+                },
+                stroke: {
+                    curve: 'smooth'
                 },
                 dataLabels: {
                     enabled: false
@@ -156,13 +150,7 @@ export default {
                     show: false,
                     type: 'datetime',
                     min: this.minDate.getTime(),
-                    tickAmount: 0,
-                    labels: {
-                        show: false
-                    },
-                    axisBorder: {
-                        show: false
-                    }
+                    categories: this.categories
                 },
                 yaxis: {
                     show: false
@@ -173,7 +161,7 @@ export default {
                     },
                     y: {
                         title: {
-                            formatter: (serie) => 'Value'
+                            formatter: (serie) => serie
                         }
                     }
                 },
@@ -189,18 +177,37 @@ export default {
             }
         },
 
+        categories() {
+            return _.map(this.chartData.series[0], (item) => {
+                return this.parseDate(item.meta)
+            })
+        },
+
         series () {
             let series = [], serie = []
+            try {
+                const seriesLenght = this.chartData.series[0][0].value.length
 
-            this.chartData.series.forEach(item => {
-                serie = {data: []}
-                item.forEach(value => {
-                    serie.data.push([this.parseDate(value.meta), value.value])
-                })
-                series.push(serie)
-            })
+                for (let i = 0; i < seriesLenght; i++) {
+                    serie = {
+                        name: this.card.meta.seriesLabels && this.card.meta.seriesLabels[i] ?
+                            this.card.meta.seriesLabels[i] : `series ${i + 1}`
+                    }
+
+                    serie.data = _.map(this.chartData.series[0], (item) => {
+                        return item.value[i] ? item.value[i] : 0
+                    })
+                    series.push(serie)
+                }
+            } catch ($ex) {
+                return []
+            }
 
             return series
+        },
+
+        chartHeight() {
+            return `${this.card.meta.cardHeight - 30}px`
         }
     },
 }
