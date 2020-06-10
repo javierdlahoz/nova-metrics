@@ -137,16 +137,22 @@ export default {
                     position: 'top',
                     horizontalAlign: 'left'
                 },
-                stroke: {
-                    curve: 'smooth'
-                },
                 dataLabels: {
                     enabled: false
                 },
                 markers: {
-                    size: 0,
+                    size: this.showMarkers ? 2 : 0,
                     style: 'solid',
-                    colors: this.colors
+                    strokeWidth: 0,
+                    colors: this.colors,
+                    hover: {
+                        size: 2
+                    }
+                },
+                stroke: {
+                    show: true,
+                    curve: 'smooth',
+                    width: 1,
                 },
                 xaxis: {
                     show: false,

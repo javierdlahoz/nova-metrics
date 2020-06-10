@@ -118,6 +118,16 @@ class TrendSeries extends Trend
     }
 
     /**
+     * Show/Hide markers
+     *
+     * @return false
+     */
+    public function showMarkers()
+    {
+        return false;
+    }
+
+    /**
      * Return the meta data to be used on the pie charts
      *
      * @return array|void
@@ -128,7 +138,8 @@ class TrendSeries extends Trend
             'meta' => [
                 'cardHeight' => $this->getHeight(),
                 'seriesLabels' => $this->seriesLabels(),
-                'colors' => $this->colors()
+                'colors' => $this->colors(),
+                'showMarkers' => $this->showMarkers()
             ]
         ], $this->withMeta([]));
     }

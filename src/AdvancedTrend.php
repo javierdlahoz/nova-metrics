@@ -33,6 +33,16 @@ class AdvancedTrend extends Trend
     public $component = 'DynamicAdvancedTrendMetric';
 
     /**
+     * Show/Hide markers
+     *
+     * @return false
+     */
+    public function showMarkers()
+    {
+        return false;
+    }
+
+    /**
      * Return the meta data to be used on the pie charts
      *
      * @return array|void
@@ -42,6 +52,7 @@ class AdvancedTrend extends Trend
         return array_merge([
             'meta' => [
                 'cardHeight' => $this->getHeight(),
+                'showMarkers' => $this->showMarkers()
             ]
         ], $this->withMeta([]));
     }

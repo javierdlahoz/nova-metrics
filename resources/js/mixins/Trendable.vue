@@ -100,6 +100,10 @@
                     return `/nova-api/metrics/${this.card.uriKey}`
                 }
             },
+
+            showMarkers() {
+                return this.card.meta.showMarkers
+            }
         }
     }
 </script>

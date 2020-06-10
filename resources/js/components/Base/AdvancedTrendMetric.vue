@@ -149,8 +149,17 @@ export default {
                     enabled: false
                 },
                 markers: {
-                    size: 0,
+                    size: this.showMarkers ? 2 : 0,
                     style: 'solid',
+                    strokeWidth: 0,
+                    hover: {
+                        size: 2
+                    }
+                },
+                stroke: {
+                    show: true,
+                    curve: 'smooth',
+                    width: 1,
                 },
                 xaxis: {
                     show: false,
@@ -201,7 +210,7 @@ export default {
             })
 
             return series
-        },
+        }
     },
 }
 </script>
