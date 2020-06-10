@@ -93,14 +93,6 @@ export default {
     methods: {
         handleChange (event) {
             this.$emit('selected', event.target.value)
-        },
-
-        resetZoom() {
-            this.reseted = true
-
-            setTimeout(() => {
-                this.reseted = false
-            }, 150)
         }
     },
 
@@ -207,7 +199,6 @@ export default {
                 })
                 series.push(serie)
             })
-            console.log(series)
 
             return series
         }

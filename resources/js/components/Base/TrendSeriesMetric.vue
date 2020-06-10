@@ -45,13 +45,7 @@
                 </option>
             </select>
         </div>
-
-<!--        <p class="flex items-center text-4xl mb-4">-->
-<!--            {{ formattedValue }}-->
-<!--            <span v-if="suffix" class="ml-2 text-sm font-bold text-80">{{ formattedSuffix }}</span>-->
-<!--        </p>-->
-
-        <div class="advanced-trend" v-if="chartData && chartData.series && !reseted">
+        <div class="advanced-trend trend-series" v-if="chartData && chartData.series && !reseted">
             <apexchart type="area" v-bind:height="chartHeight" ref="chart" :options="chartOptions" :series="series"></apexchart>
         </div>
     </loading-card>
@@ -91,14 +85,6 @@ export default {
     methods: {
         handleChange (event) {
             this.$emit('selected', event.target.value)
-        },
-
-        resetZoom() {
-            this.reseted = true
-
-            setTimeout(() => {
-                this.reseted = false
-            }, 150)
         }
     },
 
@@ -146,6 +132,10 @@ export default {
                         show: false
                     }
                 },
+                legend: {
+                    position: 'top',
+                    horizontalAlign: 'left'
+                },
                 stroke: {
                     curve: 'smooth'
                 },
@@ -171,7 +161,7 @@ export default {
                     },
                     y: {
                         title: {
-                            formatter: (serie) => 'Value'
+                            formatter: (serie) => serie
                         }
                     }
                 },
@@ -214,6 +204,10 @@ export default {
             }
 
             return series
+        },
+
+        chartHeight() {
+            return `${this.card.meta.cardHeight - 30}px`
         }
     },
 }

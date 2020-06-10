@@ -15,6 +15,14 @@
                 return Date.parse(formattedDate)
             },
 
+            resetZoom() {
+                this.reseted = true
+
+                setTimeout(() => {
+                    this.reseted = false
+                }, 50)
+            },
+
             fetch() {
                 this.loading = true
 
