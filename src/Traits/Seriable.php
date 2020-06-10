@@ -21,12 +21,10 @@ trait Seriable
     /**
      * Series labels
      *
-     * @param  array $seriesLabels
-     * @return $this
+     * @return array
      */
-    public function seriesLabels(array $seriesLabels)
+    public function seriesLabels()
     {
-        $this->seriesLabels = $seriesLabels;
-        return $this;
+        return $this->seriesLabels;
     }
 }

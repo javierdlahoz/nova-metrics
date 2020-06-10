@@ -55,7 +55,7 @@ class RadarChart extends BarChart
             'meta' => array_merge([
                 'colors' => $this->colors(),
                 'cardHeight' => $this->getHeight(),
-                'seriesLabels' => $this->seriesLabels
+                'seriesLabels' => $this->seriesLabels()
             ], $this->withMeta([]))
         ];
     }

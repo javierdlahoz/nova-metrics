@@ -127,7 +127,7 @@ class TrendSeries extends Trend
         return array_merge([
             'meta' => [
                 'cardHeight' => $this->getHeight(),
-                'seriesLabels' => $this->seriesLabels,
+                'seriesLabels' => $this->seriesLabels(),
                 'colors' => $this->colors()
             ]
         ], $this->withMeta([]));

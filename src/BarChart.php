@@ -70,7 +70,7 @@ class BarChart extends MultipleValuesMetric
                 'colors' => $this->colors(),
                 'cardHeight' => $this->getHeight(),
                 'chartType' => $this->chartType,
-                'seriesLabels' => $this->seriesLabels
+                'seriesLabels' => $this->seriesLabels()
             ], $this->withMeta([]))
         ];
     }
