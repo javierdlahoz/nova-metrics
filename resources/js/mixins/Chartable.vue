@@ -77,6 +77,9 @@ export default {
         },
         chartHeight() {
             return `${this.card.meta.cardHeight - 65}px`
+        },
+        colors() {
+            return this.card.meta.colors
         }
     }
 }

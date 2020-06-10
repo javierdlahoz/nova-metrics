@@ -132,6 +132,7 @@ export default {
                         show: false
                     }
                 },
+                colors: this.colors,
                 legend: {
                     position: 'top',
                     horizontalAlign: 'left'
@@ -145,6 +146,7 @@ export default {
                 markers: {
                     size: 0,
                     style: 'solid',
+                    colors: this.colors
                 },
                 xaxis: {
                     show: false,
@@ -167,6 +169,7 @@ export default {
                 },
                 fill: {
                     type: 'gradient',
+                    colors: this.colors,
                     gradient: {
                         shadeIntensity: 1,
                         opacityFrom: 0.7,

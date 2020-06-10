@@ -51,4 +51,26 @@ trait Chartable
     {
         return $meta;
     }
+
+    /**
+     * Available colors
+     *
+     * @return string[]
+     */
+    protected function colors()
+    {
+        return [
+            '#25ccf7',
+            '#eab543',
+            '#3b3b98',
+            '#bdc581',
+            '#f97f51',
+            '#55e6c1',
+            '#f8efba',
+            '#2c3a47',
+            '#b33771',
+            '#d6a2e8',
+            '#1f8465'
+        ];
+    }
 }

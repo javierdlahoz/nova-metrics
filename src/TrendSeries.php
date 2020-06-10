@@ -72,9 +72,12 @@ class TrendSeries extends Trend
         $query->selectRaw(DB::raw("{$expression} as date_result"));
 
         foreach ((array) $columns as $column) {
-            $wrappedColumn = $query->getQuery()->getGrammar()->wrap($column);
-
-            $query->selectRaw(DB::raw("{$function}({$wrappedColumn}) as aggregate_{$column}"));
+            if (is_string($column)) {
+                $wrappedColumn = $query->getQuery()->getGrammar()->wrap($column);
+                $query->selectRaw(DB::raw("{$function}({$wrappedColumn}) as aggregate_{$column}"));
+            } elseif (is_callable($column)) {
+                $query->selectRaw($column());
+            }
         }
 
         $results = $query
@@ -124,7 +127,8 @@ class TrendSeries extends Trend
         return array_merge([
             'meta' => [
                 'cardHeight' => $this->getHeight(),
-                'seriesLabels' => $this->seriesLabels
+                'seriesLabels' => $this->seriesLabels,
+                'colors' => $this->colors()
             ]
         ], $this->withMeta([]));
     }

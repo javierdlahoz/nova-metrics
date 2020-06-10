@@ -201,7 +201,7 @@ export default {
             })
 
             return series
-        }
+        },
     },
 }
 </script>
