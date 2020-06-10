@@ -57,38 +57,6 @@ class PieChart extends Partition
     }
 
     /**
-     * Available colors
-     *
-     * @return string[]
-     */
-    protected function colors()
-    {
-        return [
-            '#F5573B',
-            '#F99037',
-            '#F2CB22',
-            '#8FC15D',
-            '#098F56',
-            '#47C1BF',
-            '#1693EB',
-            '#6474D7',
-            '#9C6ADE',
-            '#E471DE',
-            '#25ccf7',
-            '#eab543',
-            '#3b3b98',
-            '#bdc581',
-            '#f97f51',
-            '#55e6c1',
-            '#f8efba',
-            '#2c3a47',
-            '#b33771',
-            '#d6a2e8',
-            '#1f8465'
-        ];
-    }
-
-    /**
      * Set donut value
      *
      * @param  bool $donut

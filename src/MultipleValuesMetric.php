@@ -30,11 +30,14 @@ class MultipleValuesMetric extends Partition
         $query->selectRaw($groupBy);
 
         foreach ((array) $columns as $column) {
-            $wrappedColumn = $query->getQuery()->getGrammar()->wrap(
-                $column = $column ?? $query->getModel()->getQualifiedKeyName()
-            );
-
-            $query->selectRaw(DB::raw("{$function}({$wrappedColumn}) as aggregate_{$column}"));
+            if (is_string($column)) {
+                $wrappedColumn = $query->getQuery()->getGrammar()->wrap(
+                    $column = $column ?? $query->getModel()->getQualifiedKeyName()
+                );
+                $query->selectRaw(DB::raw("{$function}({$wrappedColumn}) as aggregate_{$column}"));
+            } elseif (is_callable($column)) {
+                $query->selectRaw($column());
+            }
         }
 
         $results = $query->groupBy($groupBy)->get();

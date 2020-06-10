@@ -60,6 +60,16 @@ trait Chartable
     protected function colors()
     {
         return [
+            '#F5573B',
+            '#F99037',
+            '#F2CB22',
+            '#8FC15D',
+            '#098F56',
+            '#47C1BF',
+            '#1693EB',
+            '#6474D7',
+            '#9C6ADE',
+            '#E471DE',
             '#25ccf7',
             '#eab543',
             '#3b3b98',
