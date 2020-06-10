@@ -39,7 +39,7 @@ class AdvancedTrend extends Trend
      */
     public function showMarkers()
     {
-        return false;
+        return true;
     }
 
     /**

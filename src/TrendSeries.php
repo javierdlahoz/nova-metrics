@@ -124,7 +124,7 @@ class TrendSeries extends Trend
      */
     public function showMarkers()
     {
-        return false;
+        return true;
     }
 
     /**
