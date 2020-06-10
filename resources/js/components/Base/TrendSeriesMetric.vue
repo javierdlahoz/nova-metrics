@@ -21,7 +21,7 @@
                 </tooltip>
             </div>
 
-            <div @click="resetZoom()" class="flex justify-center items-center mr-2">
+            <div @click="resetZoom()" class="flex justify-center items-center mr-2 zoom-out">
                 <icon
                     type="search"
                     viewBox="0 0 17 17"
