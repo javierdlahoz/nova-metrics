@@ -61,12 +61,15 @@
 import _ from 'lodash'
 import { SingularOrPlural } from 'laravel-nova'
 import Charteable from '../../mixins/Chartable'
-import Trendable from '../../mixins/Trendable'
+import InteractWithDates from '../../mixins/InteractWithDates'
+import Markeable from '../../mixins/Markeable'
+import Zoomable from '../../mixins/Zoomable'
+import Formattable from '../../mixins/Formattable'
 
 export default {
     name: 'AdvancedTrendMetric',
 
-    mixins: [Charteable, Trendable],
+    mixins: [Charteable, Markeable, InteractWithDates, Zoomable, Formattable],
 
     data() {
         return {
@@ -120,7 +123,9 @@ export default {
         },
 
         formattedValue () {
-            const value = this.chartData.series ? this.chartData.series[0][this.chartData.series[0].length - 1].value : 0
+            let value = this.chartData.series ? this.chartData.series[0][this.chartData.series[0].length - 1].value : 0
+            value = this.formatValue(value, this.format)
+
             return `${this.prefix}${value}`
         },
 

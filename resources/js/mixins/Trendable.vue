@@ -3,26 +3,18 @@
     import _ from 'lodash'
 
     export default {
+        data: () => ({
+            loading: true,
+            value: '',
+            data: [],
+            format: '(0[.]00a)',
+            prefix: '',
+            suffix: '',
+            suffixInflection: true,
+            selectedRangeKey: null,
+        }),
+
         methods: {
-            parseDate(date) {
-                const year = (new Date()).getFullYear(), splitDate = date.split(' - ')
-                let formattedDate = date
-
-                if (splitDate.length > 1) {
-                    formattedDate = `${splitDate[0]}, ${year.toString()} ${splitDate[1]}`
-                }
-
-                return Date.parse(formattedDate)
-            },
-
-            resetZoom() {
-                this.reseted = true
-
-                setTimeout(() => {
-                    this.reseted = false
-                }, 50)
-            },
-
             fetch() {
                 this.loading = true
 
@@ -99,10 +91,6 @@
                 } else {
                     return `/nova-api/metrics/${this.card.uriKey}`
                 }
-            },
-
-            showMarkers() {
-                return this.card.meta.showMarkers
             }
         }
     }

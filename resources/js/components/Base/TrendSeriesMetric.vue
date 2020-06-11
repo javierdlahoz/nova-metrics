@@ -55,10 +55,13 @@
 import _ from 'lodash'
 import { SingularOrPlural } from 'laravel-nova'
 import Charteable from '../../mixins/Chartable'
-import Trendable from '../../mixins/Trendable'
+import InteractWithDates from '../../mixins/InteractWithDates'
+import Markeable from '../../mixins/Markeable'
+import Zoomable from '../../mixins/Zoomable'
+import Formattable from '../../mixins/Formattable'
 
 export default {
-    mixins: [Charteable, Trendable],
+    mixins: [Charteable, InteractWithDates, Markeable, Zoomable, Formattable],
 
     data() {
         return {
@@ -134,8 +137,20 @@ export default {
                 },
                 colors: this.colors,
                 legend: {
-                    position: 'top',
-                    horizontalAlign: 'left'
+                    position: 'left',
+                    floating: true,
+                    horizontalAlign: 'left',
+                    offsetX: -20,
+                    offsetY: 10,
+                    formatter: (item, seriesInfo) => {
+                        const index = seriesInfo.seriesIndex
+
+                        if (this.series && this.series[index]) {
+                            const value = this.formatValue(this.series[index].data[this.series[index].data.length - 1], this.format)
+                            return `${this.series[index].name} ${this.prefix}${value}${this.suffix}`
+                        }
+                        return ''
+                    }
                 },
                 dataLabels: {
                     enabled: false
