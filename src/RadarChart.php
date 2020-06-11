@@ -5,10 +5,11 @@ namespace Jdlabs\NovaMetrics;
 
 
 use Jdlabs\NovaMetrics\Traits\Chartable;
+use Jdlabs\NovaMetrics\Traits\Refreshable;
 
 class RadarChart extends BarChart
 {
-    use Chartable;
+    use Chartable, Refreshable;
 
     /**
      * Card's height
@@ -55,7 +56,8 @@ class RadarChart extends BarChart
             'meta' => array_merge([
                 'colors' => $this->colors(),
                 'cardHeight' => $this->getHeight(),
-                'seriesLabels' => $this->seriesLabels()
+                'seriesLabels' => $this->seriesLabels(),
+                'refreshRate' => $this->refreshRate()
             ], $this->withMeta([]))
         ];
     }

@@ -6,6 +6,7 @@ namespace Jdlabs\NovaMetrics;
 
 use Illuminate\Http\Request;
 use Jdlabs\NovaMetrics\Traits\Chartable;
+use Jdlabs\NovaMetrics\Traits\Refreshable;
 use Laravel\Nova\Card;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\PartitionResult;
@@ -13,7 +14,7 @@ use Laravel\Nova\Metrics\PartitionResult;
 class PieChart extends Partition
 {
 
-    use Chartable;
+    use Chartable, Refreshable;
 
     /**
      * The width of the card (1/3, 1/2, or full).
@@ -79,7 +80,8 @@ class PieChart extends Partition
             'meta' => [
                 'colors' => $this->colors(),
                 'cardHeight' => $this->getHeight(),
-                'donut' => $this->donut
+                'donut' => $this->donut,
+                'refreshRate' => $this->refreshRate()
             ]
         ];
     }

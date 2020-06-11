@@ -1,7 +1,9 @@
 <script>
+import Refreshable from './Refreshable'
 import { Minimum } from 'laravel-nova'
 
 export default {
+    mixins: [Refreshable],
     methods: {
         fetch () {
             this.loading = true

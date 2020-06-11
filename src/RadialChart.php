@@ -5,11 +5,12 @@ namespace Jdlabs\NovaMetrics;
 
 
 use Jdlabs\NovaMetrics\Traits\Chartable;
+use Jdlabs\NovaMetrics\Traits\Refreshable;
 use Laravel\Nova\Metrics\Partition;
 
 class RadialChart extends Partition
 {
-    use Chartable;
+    use Chartable, Refreshable;
 
     /**
      * Card's height
@@ -61,7 +62,8 @@ class RadialChart extends Partition
                 'cardHeight' => $this->getHeight(),
                 'colors' => $this->colors(),
                 'total' => $this->total(),
-                'totalLabel' => $this->totalLabel
+                'totalLabel' => $this->totalLabel,
+                'refreshRate' => $this->refreshRate()
             ]
         ], $this->withMeta([]));
     }
