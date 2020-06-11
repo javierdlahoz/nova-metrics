@@ -5,11 +5,12 @@ namespace Jdlabs\NovaMetrics;
 
 
 use Jdlabs\NovaMetrics\Traits\Chartable;
+use Jdlabs\NovaMetrics\Traits\Refreshable;
 use Laravel\Nova\Metrics\Trend;
 
 class AdvancedTrend extends Trend
 {
-    use Chartable;
+    use Chartable, Refreshable;
 
     /**
      * Card's width
@@ -52,7 +53,8 @@ class AdvancedTrend extends Trend
         return array_merge([
             'meta' => [
                 'cardHeight' => $this->getHeight(),
-                'showMarkers' => $this->showMarkers()
+                'showMarkers' => $this->showMarkers(),
+                'refreshRate' => $this->refreshRate()
             ]
         ], $this->withMeta([]));
     }

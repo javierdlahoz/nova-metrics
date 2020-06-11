@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Jdlabs\NovaMetrics\Traits\Chartable;
+use Jdlabs\NovaMetrics\Traits\Refreshable;
 use Laravel\Nova\Card;
 use Laravel\Nova\Metrics\Partition;
 use Laravel\Nova\Metrics\PartitionResult;
@@ -15,7 +16,7 @@ use Laravel\Nova\Metrics\Trend;
 
 class BarChart extends MultipleValuesMetric
 {
-    use Chartable;
+    use Chartable, Refreshable;
 
     /**
      * The width of the card (1/3, 1/2, or full).
@@ -70,7 +71,8 @@ class BarChart extends MultipleValuesMetric
                 'colors' => $this->colors(),
                 'cardHeight' => $this->getHeight(),
                 'chartType' => $this->chartType,
-                'seriesLabels' => $this->seriesLabels()
+                'seriesLabels' => $this->seriesLabels(),
+                'refreshRate' => $this->refreshRate()
             ], $this->withMeta([]))
         ];
     }

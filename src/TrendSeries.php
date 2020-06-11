@@ -8,6 +8,7 @@ use Cake\Chronos\Chronos;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Jdlabs\NovaMetrics\MultipleValuesMetric;
+use Jdlabs\NovaMetrics\Traits\Refreshable;
 use Jdlabs\NovaMetrics\Traits\Seriable;
 use Laravel\Nova\Metrics\Trend;
 use Jdlabs\NovaMetrics\Traits\Chartable;
@@ -16,7 +17,7 @@ use Laravel\Nova\Nova;
 
 class TrendSeries extends Trend
 {
-    use Chartable, Seriable;
+    use Chartable, Seriable, Refreshable;
 
     /**
      * Card's width
@@ -139,7 +140,8 @@ class TrendSeries extends Trend
                 'cardHeight' => $this->getHeight(),
                 'seriesLabels' => $this->seriesLabels(),
                 'colors' => $this->colors(),
-                'showMarkers' => $this->showMarkers()
+                'showMarkers' => $this->showMarkers(),
+                'refreshRate' => $this->refreshRate()
             ]
         ], $this->withMeta([]));
     }

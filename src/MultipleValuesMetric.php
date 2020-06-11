@@ -6,6 +6,7 @@ namespace Jdlabs\NovaMetrics;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Jdlabs\NovaMetrics\Traits\Refreshable;
 use Jdlabs\NovaMetrics\Traits\Seriable;
 use Laravel\Nova\Metrics\Partition;
 
