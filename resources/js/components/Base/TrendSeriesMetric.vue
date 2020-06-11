@@ -151,7 +151,7 @@ export default {
                 },
                 stroke: {
                     show: true,
-                    curve: 'smooth',
+                    curve: 'straight',
                     width: 1,
                 },
                 xaxis: {

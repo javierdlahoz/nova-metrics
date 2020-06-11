@@ -46,10 +46,10 @@
             </select>
         </div>
 
-        <p class="flex items-center text-4xl mb-4 last-trend-value">
+        <span class="inline-block text-4xl mb-4 last-trend-value">
             {{ formattedValue }}
             <span v-if="suffix" class="ml-2 text-sm font-bold text-80">{{ formattedSuffix }}</span>
-        </p>
+        </span>
 
         <div id="chart-timeline" class="advanced-trend" v-if="chartData && chartData.series && !reseted">
             <apexchart type="area" v-bind:height="chartHeight" ref="chart" :options="chartOptions" :series="series"></apexchart>
@@ -158,7 +158,7 @@ export default {
                 },
                 stroke: {
                     show: true,
-                    curve: 'smooth',
+                    curve: 'straight',
                     width: 1,
                 },
                 xaxis: {
