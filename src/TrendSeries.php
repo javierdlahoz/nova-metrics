@@ -6,6 +6,7 @@ namespace Jdlabs\NovaMetrics;
 
 use Cake\Chronos\Chronos;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Jdlabs\NovaMetrics\MultipleValuesMetric;
@@ -65,7 +66,7 @@ class TrendSeries extends Trend
         $query = $model instanceof Builder ? $model : (new $model)->newQuery();
 
         $timezone = Nova::resolveUserTimezone($request) ?? $request->timezone;
-
+        
         $expression = (string) TrendDateExpressionFactory::make(
             $query, $dateColumn = $dateColumn ?? $query->getModel()->getCreatedAtColumn(),
             $unit, $timezone
@@ -84,7 +85,9 @@ class TrendSeries extends Trend
         foreach ((array) $columns as $column) {
             if (is_string($column)) {
                 $wrappedColumn = $query->getQuery()->getGrammar()->wrap($column);
-                $query->selectRaw(DB::raw("{$function}({$wrappedColumn}) as aggregate_{$column}"));
+                $columnName = Arr::get(explode(".", $column), 1, $column);
+
+                $query->selectRaw(DB::raw("{$function}({$wrappedColumn}) as aggregate_{$columnName}"));
             } elseif (is_callable($column)) {
                 $query = $column($query);
             }
