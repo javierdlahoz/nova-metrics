@@ -1,6 +1,6 @@
 <template>
     <loading-card :loading="loading" class="px-6 py-4 advanced-trend-card" v-bind:style="{'height': `${card.meta.cardHeight}px`}">
-        <div class="flex mb-4">
+        <div class="flex mb-4 relative z-10">
             <h3 class="mr-3 text-base text-80 font-bold flex-1">{{ title }}</h3>
 
             <div v-if="helpText" class="absolute pin-r pin-b p-2 z-50">

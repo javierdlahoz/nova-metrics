@@ -145,9 +145,9 @@ export default {
                     formatter: (item, seriesInfo) => {
                         const index = seriesInfo.seriesIndex
 
-                        if (this.series && this.series[index]) {
-                            const value = this.formatValue(this.series[index].data[this.series[index].data.length - 1], this.format)
-                            return `${this.series[index].name} ${this.prefix}${value}${this.suffix}`
+                        if (this.series && this.value) {
+                            const value = this.formatValue(this.value[index], this.format)
+                            return `${this.series[index].name}: ${this.prefix}${value}${this.suffix}`
                         }
                         return ''
                     }

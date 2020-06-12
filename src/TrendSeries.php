@@ -7,6 +7,7 @@ namespace Jdlabs\NovaMetrics;
 use Cake\Chronos\Chronos;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Jdlabs\NovaMetrics\MultipleValuesMetric;
 use Jdlabs\NovaMetrics\Traits\Refreshable;
 use Jdlabs\NovaMetrics\Traits\Seriable;
@@ -41,6 +42,13 @@ class TrendSeries extends Trend
     public $component = 'DynamicTrendSeriesMetric';
 
     /**
+     * Array of aggregated columns
+     *
+     * @var array
+     */
+    private $columns;
+
+    /**
      * Return a value result showing a aggregate over time.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -53,6 +61,7 @@ class TrendSeries extends Trend
      */
     protected function aggregate($request, $model, $unit, $function, $columns, $dateColumn = null)
     {
+        $this->columns = $columns;
         $query = $model instanceof Builder ? $model : (new $model)->newQuery();
 
         $timezone = Nova::resolveUserTimezone($request) ?? $request->timezone;
@@ -116,6 +125,56 @@ class TrendSeries extends Trend
         return array_map(function ($item) {
             return round($item, $this->precision);
         }, array_values($attributes));
+    }
+
+    /**
+     * Get all of the possbile date results for the given units.
+     *
+     * @param  \Cake\Chronos\Chronos  $startingDate
+     * @param  \Cake\Chronos\Chronos  $endingDate
+     * @param  string  $unit
+     * @param  mixed  $timezone
+     * @param  bool  $twelveHourTime
+     * @return array
+     */
+    protected function getAllPossibleDateResults(Chronos $startingDate, Chronos $endingDate,
+                                                 $unit, $timezone, $twelveHourTime)
+    {
+        $nextDate = $startingDate;
+        $emptyValue = array_fill(0, count($this->columns), 0);
+
+        if (! empty($timezone)) {
+            $nextDate = $startingDate->setTimezone($timezone);
+            $endingDate = $endingDate->setTimezone($timezone);
+        }
+
+        $possibleDateResults[$this->formatPossibleAggregateResultDate(
+            $nextDate, $unit, $twelveHourTime
+        )] = $emptyValue;
+
+        while ($nextDate->lt($endingDate)) {
+            if ($unit === self::BY_MONTHS) {
+                $nextDate = $nextDate->addMonths(1);
+            } elseif ($unit === self::BY_WEEKS) {
+                $nextDate = $nextDate->addWeeks(1);
+            } elseif ($unit === self::BY_DAYS) {
+                $nextDate = $nextDate->addDays(1);
+            } elseif ($unit === self::BY_HOURS) {
+                $nextDate = $nextDate->addHours(1);
+            } elseif ($unit === self::BY_MINUTES) {
+                $nextDate = $nextDate->addMinutes(1);
+            }
+
+            if ($nextDate->lte($endingDate)) {
+                $possibleDateResults[
+                $this->formatPossibleAggregateResultDate(
+                    $nextDate, $unit, $twelveHourTime
+                )
+                ] = $emptyValue;
+            }
+        }
+
+        return $possibleDateResults;
     }
 
     /**
