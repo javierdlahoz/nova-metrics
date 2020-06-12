@@ -141,7 +141,8 @@ class TrendSeries extends Trend
                                                  $unit, $timezone, $twelveHourTime)
     {
         $nextDate = $startingDate;
-        $emptyValue = array_fill(0, count($this->columns), 0);
+        $columnCount = is_array($this->columns) ? count($this->columns) : 1;
+        $emptyValue = array_fill(0, $columnCount, 0);
 
         if (! empty($timezone)) {
             $nextDate = $startingDate->setTimezone($timezone);
