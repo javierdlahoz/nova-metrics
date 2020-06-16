@@ -77,6 +77,7 @@ export default {
         value: {},
         chartData: {},
         card: {},
+        format: null,
         maxWidth: {},
         prefix: '',
         suffix: '',
@@ -180,12 +181,10 @@ export default {
                 },
                 tooltip: {
                     x: {
-                        format: 'dd MMM yyyy',
+                        format: 'dd MMM yyyy'
                     },
                     y: {
-                        title: {
-                            formatter: (serie) => serie
-                        }
+                        formatter: (value) => this.formatValue(value, this.format)
                     }
                 },
                 fill: {
