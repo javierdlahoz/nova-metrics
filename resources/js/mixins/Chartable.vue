@@ -69,8 +69,8 @@ export default {
         },
         chartWidth() {
             const widths = {
-                full: '50%',
-                '1/2': '40%' ,
+                full: '90px',
+                '1/2': '90px' ,
                 '1/3': '90px',
                 '1/4': '90px'
             };

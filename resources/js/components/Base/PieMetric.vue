@@ -27,7 +27,7 @@
             </tooltip>
         </div>
 
-        <div class="overflow-hidden overflow-y-auto" v-bind:style="{maxHeight: chartHeight}">
+        <div class="overflow-hidden overflow-y-auto relative z-10" v-bind:style="{maxHeight: legendsHeight}">
             <ul class="list-reset">
                 <li
                     v-for="item in formattedItems"
@@ -47,7 +47,7 @@
             ref="chart"
             :class="chartClasses"
             v-bind:style="{'height': chartHeight, 'width': chartWidth}"
-            style="right: 10px; bottom: 30px; top: calc(50% + 15px);"
+            style="right: 10px; bottom: 30px; top: calc(50% + 15px); z-index: 0;"
         />
     </loading-card>
 </template>
@@ -169,6 +169,10 @@ export default {
             };
 
             return widths[this.card.width];
+        },
+
+        legendsHeight() {
+            return `${this.card.meta.cardHeight - 60}px`
         }
     },
 }
