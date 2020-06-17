@@ -73,15 +73,15 @@
 
         created() {
             if (this.hasRanges) {
-                this.selectedRangeKey = this.card.ranges[0].value;
+                this.selectedRangeKey = this.card.selectedRangeKey || this.card.ranges[0].value
             }
 
             if (this.card.refreshWhenActionRuns) {
-                Nova.$on("action-executed", () => this.fetch());
+                Nova.$on("action-executed", () => this.fetch())
             }
 
             if (this.resourceName) {
-                Nova.$on("resources-loaded", () => this.fetch());
+                Nova.$on("resources-loaded", () => this.fetch())
             }
         },
 
