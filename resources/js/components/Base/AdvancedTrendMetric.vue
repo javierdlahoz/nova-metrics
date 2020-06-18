@@ -188,7 +188,8 @@ export default {
                     y: {
                         title: {
                             formatter: (serie) => 'Value'
-                        }
+                        },
+                        formatter: (value) => this.prefix + this.formatValue(value, this.format) + this.suffix
                     }
                 },
                 fill: {

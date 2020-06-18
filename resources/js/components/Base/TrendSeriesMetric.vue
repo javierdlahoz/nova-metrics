@@ -184,7 +184,7 @@ export default {
                         format: 'dd MMM yyyy'
                     },
                     y: {
-                        formatter: (value) => this.formatValue(value, this.format)
+                        formatter: (value) => this.prefix + this.formatValue(value, this.format) + this.suffix
                     }
                 },
                 fill: {
