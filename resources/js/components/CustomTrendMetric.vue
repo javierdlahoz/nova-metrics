@@ -21,11 +21,12 @@
     import { InteractsWithDates, Minimum } from 'laravel-nova'
     import BaseTrendMetric from './Base/TrendMetric'
     import MetricBehavior from './MetricBehavior'
+    import Payloadable from '../mixins/Payloadable'
 
     export default {
         name: 'CustomTrendMetric',
 
-        mixins: [InteractsWithDates, MetricBehavior],
+        mixins: [InteractsWithDates, MetricBehavior, Payloadable],
 
         components: {
             BaseTrendMetric,
@@ -137,28 +138,6 @@
         computed: {
             hasRanges() {
                 return this.card.ranges.length > 0
-            },
-
-            metricPayload() {
-                const payload = {
-                    params: {
-                        timezone: this.userTimezone,
-                        twelveHourTime: this.usesTwelveHourTime
-                    }
-                };
-
-                if (this.hasRanges) {
-                    payload.params.range = this.selectedRangeKey;
-                }
-
-                if (this.resourceName) {
-                    const filters = this.$route.query[
-                        `${this.resourceName}_filter`
-                        ];
-                    payload.params.filters = filters;
-                }
-
-                return payload;
             },
 
             metricEndpoint() {

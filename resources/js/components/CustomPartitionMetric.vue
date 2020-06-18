@@ -12,9 +12,10 @@
     import { Minimum } from 'laravel-nova'
     import BasePartitionMetric from './Base/PartitionMetric'
     import MetricBehavior from './MetricBehavior'
+    import Payloadable from '../mixins/Payloadable'
 
     export default {
-        mixins: [MetricBehavior],
+        mixins: [MetricBehavior, Payloadable],
 
         components: {
             BasePartitionMetric,
@@ -77,16 +78,6 @@
                     }
                 );
             }
-        },
-        computed: {
-            metricPayload() {
-                let payload = { params: {} };
-                if (this.resourceName) {
-                    const filters = this.$route.query[`${this.resourceName}_filter`];
-                    payload.params.filters = filters;
-                }
-                return payload;
-            }
-        },
+        }
     }
 </script>

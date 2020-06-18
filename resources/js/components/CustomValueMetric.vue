@@ -22,11 +22,12 @@
     import BaseValueMetric from './Base/ValueMetric'
     import MetricBehavior from './MetricBehavior'
     import CustomParameter from '../mixins/CustomParameter'
+    import Payloadable from '../mixins/Payloadable'
 
     export default {
         name: 'ValueMetric',
 
-        mixins: [InteractsWithDates, MetricBehavior, CustomParameter],
+        mixins: [InteractsWithDates, MetricBehavior, CustomParameter, Payloadable],
 
         components: {
             BaseValueMetric,
@@ -79,6 +80,14 @@
             if (this.hasRanges) {
                 this.selectedRangeKey = this.card.ranges[0].value;
             }
+
+            if (this.card.refreshWhenActionRuns) {
+                Nova.$on("action-executed", () => this.fetch())
+            }
+
+            if (this.resourceName) {
+                Nova.$on("resources-loaded", () => this.fetch())
+            }
         },
 
         mounted() {
@@ -93,7 +102,6 @@
 
             fetch() {
                 this.loading = true
-
                 Minimum(Nova.request().get(this.metricEndpoint, this.metricPayload)).then(
                     ({
                          data: {
@@ -124,24 +132,6 @@
         computed: {
             hasRanges() {
                 return this.card.ranges.length > 0
-            },
-
-            metricPayload() {
-                const payload = {
-                    params: {
-                        timezone: this.userTimezone
-                    }
-                };
-
-                if (this.hasRanges) {
-                    payload.params.range = this.selectedRangeKey;
-                }
-
-                if (this.resourceName) {
-                    payload.params = {...this.parameters};
-                }
-
-                return payload;
             },
 
             metricEndpoint() {

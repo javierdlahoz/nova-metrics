@@ -1,8 +1,11 @@
 <script>
     import { Minimum } from 'laravel-nova'
     import _ from 'lodash'
+    import Payloadable from './Payloadable'
 
     export default {
+        mixins: [Payloadable],
+
         data: () => ({
             loading: true,
             value: '',
@@ -58,28 +61,6 @@
         computed: {
             hasRanges() {
                 return this.card.ranges.length > 0
-            },
-
-            metricPayload() {
-                const payload = {
-                    params: {
-                        timezone: this.userTimezone,
-                        twelveHourTime: this.usesTwelveHourTime
-                    }
-                };
-
-                if (this.hasRanges) {
-                    payload.params.range = this.selectedRangeKey;
-                }
-
-                if (this.resourceName) {
-                    const filters = this.$route.query[
-                        `${this.resourceName}_filter`
-                        ];
-                    payload.params.filters = filters;
-                }
-
-                return payload;
             },
 
             metricEndpoint() {
