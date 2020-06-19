@@ -31,7 +31,7 @@ export default {
         },
 
         refreshRate() {
-            return this.card.meta.refreshRate
+            return this.card && this.card.meta ? this.card.meta.refreshRate : 0
         }
     }
 }

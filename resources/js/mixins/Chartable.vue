@@ -5,6 +5,7 @@ import Payloadable from './Payloadable'
 
 export default {
     mixins: [Refreshable, Payloadable],
+
     methods: {
         fetch () {
             this.loading = true
@@ -21,6 +22,7 @@ export default {
                 }
             )
         },
+
         renderChart () {
             if (this.chartData) {
                 this.chartOptions = this.card.meta
@@ -28,10 +30,12 @@ export default {
             }
         }
     },
+
     computed: {
         chartPayload () {
             return {}
         },
+
         chartEndpoint () {
             if (this.resourceName && this.resourceId) {
                 return `/nova-api/${this.resourceName}/${this.resourceId}/metrics/${this.card.uriKey}`
@@ -41,15 +45,19 @@ export default {
                 return `/nova-api/metrics/${this.card.uriKey}`
             }
         },
+
         labels () {
             return this.chartData.map((item) => item.label)
         },
+
         series () {
             return this.chartData.map((item) => parseFloat(item.value))
         },
+
         formattedTotal () {
             return this.chartData.reduce((prev, data) => prev + (data.value || 0), 0);
         },
+
         metricEndpoint() {
             const lens = this.lens !== '' ? `/lens/${this.lens}` : ''
             if (this.resourceName && this.resourceId) {
@@ -60,6 +68,7 @@ export default {
                 return `/nova-api/metrics/${this.card.uriKey}`
             }
         },
+
         chartWidth() {
             const widths = {
                 full: '90px',
@@ -70,11 +79,17 @@ export default {
 
             return widths[this.card.width];
         },
+
         chartHeight() {
             return `${this.card.meta.cardHeight - 65}px`
         },
+
         colors() {
             return this.card.meta.colors
+        },
+
+        resourceName() {
+            return this.$route.params.resourceName
         }
     }
 }
