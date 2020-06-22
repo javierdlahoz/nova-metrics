@@ -140,10 +140,11 @@ class CustomValue extends Value
     {
         $class = $request->resource();
         $searchableFields = $class::$search;
+        $table = (new $class::$model)->getTable();
 
-        $query->where(function ($query) use ($request, $searchableFields) {
+        $query->where(function ($query) use ($request, $searchableFields, $table) {
             foreach ($searchableFields as $field) {
-                $query->orWhere($field, 'like', "%{$request->input('search')}%");
+                $query->orWhere($table . '.' . $field, 'like', "%{$request->input('search')}%");
             }
         });
 
