@@ -109,7 +109,7 @@ class CustomValue extends Value
             if (class_exists($filterClass) && class_implements($filterClass, FilterContract::class)) {
                 (new $filterClass)->apply($request, $query, $value);
             } else {
-                $query = $this->applyCustomFilters($request, $query, $filter);
+                $query = $this->applyCustomFilters($query, $request, $filter);
             }
         }
 
@@ -119,12 +119,12 @@ class CustomValue extends Value
     /**
      * Applies custom filters not matching the class => value rule
      *
-     * @param  NovaRequest $request
      * @param  Builder $query
+     * @param  NovaRequest $request
      * @param  array $filter
      * @return Builder
      */
-    public function applyCustomFilters(NovaRequest $request, Builder $query, $filter)
+    public function applyCustomFilters(Builder $query, NovaRequest $request, $filter)
     {
         // TODO: Override this on custom metrics
         return $query;
