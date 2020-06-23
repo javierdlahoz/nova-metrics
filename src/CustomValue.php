@@ -58,7 +58,11 @@ class CustomValue extends Value
      */
     protected function getFilters(NovaRequest $request) : Collection
     {
-        if (!$this->filters && $request->filled('filters')) {
+        if ($this->filters) {
+            return $this->filters;
+        }
+
+        if ($request->filled('filters')) {
             $filters = (new FilterDecoder($request->input('filters')))->decodeFromBase64String();
             $filters = array_filter($filters, fn ($arr) => Arr::get($arr, 'value') != '');
 
@@ -66,6 +70,7 @@ class CustomValue extends Value
         } else {
             $this->filters = collect([]);
         }
+
         return $this->filters;
     }
 
