@@ -91,7 +91,9 @@
         },
 
         mounted() {
-            this.fetch(this.selectedRangeKey)
+            if (!this.resourceName) {
+                this.fetch(this.selectedRangeKey)
+            }
         },
 
         methods: {

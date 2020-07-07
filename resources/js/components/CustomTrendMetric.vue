@@ -86,7 +86,9 @@
         },
 
         mounted() {
-            this.fetch()
+            if (!this.resourceName) {
+                this.fetch()
+            }
         },
 
         methods: {

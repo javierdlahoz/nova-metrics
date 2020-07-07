@@ -56,7 +56,9 @@ export default {
     },
 
     created() {
-        this.fetch();
+        if (!this.resourceName) {
+            this.fetch();
+        }
 
         if (this.card.refreshWhenActionRuns) {
             Nova.$on("action-executed", () => this.fetch());
