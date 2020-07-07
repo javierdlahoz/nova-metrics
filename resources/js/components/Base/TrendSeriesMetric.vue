@@ -181,7 +181,7 @@ export default {
                 },
                 tooltip: {
                     x: {
-                        format: 'dd MMM yyyy'
+                        format: 'yyyy-MM-dd'
                     },
                     y: {
                         formatter: (value) => this.prefix + this.formatValue(value, this.format) + this.suffix
