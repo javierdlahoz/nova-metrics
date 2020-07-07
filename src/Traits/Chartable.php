@@ -5,6 +5,8 @@ namespace Jdlabs\NovaMetrics\Traits;
 
 trait Chartable
 {
+    use Filterable;
+
     /**
      * Nova Card's height
      *
