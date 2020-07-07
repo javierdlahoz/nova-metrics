@@ -185,7 +185,8 @@ export default {
                     },
                     y: {
                         formatter: (value) => this.prefix + this.formatValue(value, this.format) + this.suffix
-                    }
+                    },
+                    followCursor: true
                 },
                 fill: {
                     type: 'gradient',
