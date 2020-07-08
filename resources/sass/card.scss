@@ -84,4 +84,21 @@
         padding-left: 30px;
         top: 0 !important;
     }
+
+    .apexcharts-tooltip {
+        margin-top: -10px;
+    }
+
+    .apexcharts-tooltip-y-group {
+        padding: 2px 0 2px;
+    }
+
+    .apexcharts-tooltip-series-group.apexcharts-active {
+        padding-bottom: 0 !important;
+    }
+
+    .apexcharts-tooltip-title {
+        padding: 3px 6px;
+    }
 }
+
