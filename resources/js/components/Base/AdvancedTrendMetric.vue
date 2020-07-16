@@ -52,7 +52,7 @@
         </span>
 
         <div id="chart-timeline" class="advanced-trend" v-if="chartData && chartData.series && !reseted">
-            <apexchart type="area" v-bind:height="chartHeight" ref="chart" :options="chartOptions" :series="series"></apexchart>
+            <apexchart type="area" v-bind:height="chartHeight" ref="chart" :options="chartOptions" :series="series" />
         </div>
     </loading-card>
 </template>
@@ -150,10 +150,12 @@ export default {
                         show: false
                     }
                 },
+                colors: this.colors,
                 dataLabels: {
                     enabled: false
                 },
                 markers: {
+                    colors: this.colors,
                     size: this.showMarkers ? 2 : 0,
                     style: 'solid',
                     strokeWidth: 0,
@@ -162,6 +164,7 @@ export default {
                     }
                 },
                 stroke: {
+                    colors: this.colors,
                     show: true,
                     curve: 'straight',
                     width: 1,
@@ -193,6 +196,7 @@ export default {
                     }
                 },
                 fill: {
+                    colors: this.colors,
                     type: 'gradient',
                     gradient: {
                         shadeIntensity: 1,

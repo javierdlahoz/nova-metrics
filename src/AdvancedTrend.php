@@ -59,7 +59,8 @@ class AdvancedTrend extends Trend
             'meta' => [
                 'cardHeight' => $this->getHeight(),
                 'showMarkers' => $this->showMarkers(),
-                'refreshRate' => $this->refreshRate()
+                'refreshRate' => $this->refreshRate(),
+                'colors' => $this->colors()
             ]
         ], $this->withMeta([]));
     }

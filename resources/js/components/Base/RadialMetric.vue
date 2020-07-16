@@ -21,7 +21,7 @@
                 </tooltip>
             </div>
         </div>
-        <div id="chart" v-if="series && series.length > 0">
+        <div id="chart" v-if="series && series.length > 0" style="margin-top: -24px">
             <apexchart type="radialBar" v-bind:height="chartHeight" :options="chartOptions" :series="series"></apexchart>
         </div>
     </loading-card>
@@ -73,10 +73,10 @@ export default {
                         // endAngle: 270,
                         dataLabels: {
                             name: {
-                                fontSize: '16px'
+                                fontSize: this.card.meta.cardHeight > 150 ? '16px' : '11px'
                             },
                             value: {
-                                fontSize: '14px'
+                                fontSize: this.card.meta.cardHeight > 150 ? '14px' : '11px'
                             },
                             total: {
                                 show: true,
@@ -129,7 +129,11 @@ export default {
             return _(this.chartData)
                 .map(item => item.label)
                 .value()
-        }
+        },
+
+        chartHeight() {
+            return `${this.card.meta.cardHeight - 15}px`
+        },
     },
 }
 </script>
