@@ -1,0 +1,151 @@
+<template>
+    <BaseMultipleValueMetric
+        @selected="handleRangeSelected"
+        :title="card.name"
+        :help-text="card.helpText"
+        :help-width="card.helpWidth"
+        :previous="previous"
+        :value="value"
+        :ranges="card.ranges"
+        :format="format"
+        :prefix="prefix"
+        :suffix="suffix"
+        :suffix-inflection="suffixInflection"
+        :selected-range-key="selectedRangeKey"
+        :loading="loading"
+        :zero-result="zeroResult"
+    />
+</template>
+
+<script>
+    import { InteractsWithDates, Minimum } from 'laravel-nova'
+    import BaseMultipleValueMetric from './Base/MultipleValueMetric'
+    import MetricBehavior from './MetricBehavior'
+    import CustomParameter from '../mixins/CustomParameter'
+    import Payloadable from '../mixins/Payloadable'
+
+    export default {
+        name: 'MultipleValueMetric',
+
+        mixins: [InteractsWithDates, MetricBehavior, CustomParameter, Payloadable],
+
+        components: {
+            BaseMultipleValueMetric,
+        },
+
+        props: {
+            card: {
+                type: Object,
+                required: true,
+            },
+
+            resourceName: {
+                type: String,
+                default: '',
+            },
+
+            resourceId: {
+                type: [Number, String],
+                default: '',
+            },
+
+            lens: {
+                type: String,
+                default: '',
+            },
+        },
+
+        data: () => ({
+            loading: true,
+            format: '(0[.]00a)',
+            value: 0,
+            previous: 0,
+            prefix: '',
+            suffix: '',
+            suffixInflection: true,
+            selectedRangeKey: null,
+            zeroResult: false,
+        }),
+
+        watch: {
+            resourceId() {
+                this.fetch()
+            },
+            '$route.query'() {
+                this.$nextTick(() => this.fetch())
+            }
+        },
+
+        created() {
+            if (this.hasRanges) {
+                this.selectedRangeKey = this.card.ranges[0].value;
+            }
+
+            if (this.card.refreshWhenActionRuns) {
+                Nova.$on("action-executed", () => this.fetch())
+            }
+
+            if (this.resourceName) {
+                Nova.$on("resources-loaded", () => this.fetch())
+            }
+        },
+
+        mounted() {
+            if (!this.resourceName) {
+                this.fetch(this.selectedRangeKey)
+            }
+        },
+
+        methods: {
+            handleRangeSelected(key) {
+                this.selectedRangeKey = key
+                this.fetch()
+            },
+
+            fetch() {
+                this.loading = true
+                Minimum(Nova.request().get(this.metricEndpoint, this.metricPayload)).then(
+                    ({
+                         data: {
+                             value: {
+                                 value,
+                                 previous,
+                                 prefix,
+                                 suffix,
+                                 suffixInflection,
+                                 format,
+                                 zeroResult,
+                             },
+                         },
+                     }) => {
+                        this.value = value
+                        this.format = format || this.format
+                        this.prefix = prefix || this.prefix
+                        this.suffix = suffix || this.suffix
+                        this.suffixInflection = suffixInflection
+                        this.zeroResult = zeroResult || this.zeroResult
+                        this.previous = previous
+                        this.loading = false
+                    }
+                )
+            },
+        },
+
+        computed: {
+            hasRanges() {
+                return this.card && this.card.ranges.length > 0
+            },
+
+            metricEndpoint() {
+                const lens = this.lens !== '' ? `/lens/${this.lens}` : ''
+                if (this.resourceName && this.resourceId) {
+                    return `/nova-api/${this.resourceName}${lens}/${this.resourceId}/metrics/${this.card.uriKey}`
+                } else if (this.resourceName) {
+                    return `/nova-api/${this.resourceName}${lens}/metrics/${this.card.uriKey}`
+                } else {
+                    return `/nova-api/metrics/${this.card.uriKey}`
+                }
+            },
+        },
+    }
+</script>

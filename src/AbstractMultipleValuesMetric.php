@@ -10,7 +10,7 @@ use Jdlabs\NovaMetrics\Traits\Refreshable;
 use Jdlabs\NovaMetrics\Traits\Seriable;
 use Laravel\Nova\Metrics\Partition;
 
-class MultipleValuesMetric extends Partition
+class AbstractMultipleValuesMetric extends Partition
 {
     use Seriable;
 
