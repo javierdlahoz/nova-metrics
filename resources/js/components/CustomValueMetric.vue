@@ -91,7 +91,7 @@
         },
 
         mounted() {
-            if (!this.resourceName) {
+            if (!this.resourceName || this.card.onlyOnDetail) {
                 this.fetch(this.selectedRangeKey)
             }
         },
