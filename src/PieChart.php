@@ -4,7 +4,9 @@
 namespace Jdlabs\NovaMetrics;
 
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Jdlabs\NovaMetrics\Traits\Chartable;
 use Jdlabs\NovaMetrics\Traits\Refreshable;
 use Laravel\Nova\Card;
@@ -67,6 +69,41 @@ class PieChart extends Partition
     {
         $this->donut = $donut;
         return $this;
+    }
+
+    /**
+     * Return a partition result showing the segments of a aggregate.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Database\Eloquent\Builder|string  $model
+     * @param  string  $function
+     * @param  string  $column
+     * @param  string  $groupBy
+     * @return \Laravel\Nova\Metrics\PartitionResult
+     */
+    protected function aggregate($request, $model, $function, $column, $groupBy)
+    {
+        $query = $model instanceof Builder ? $model : (new $model)->newQuery();
+
+        if (is_callable($column)) {
+            $query = $column($query);
+            $results =  $query->selectRaw("{$groupBy}")
+                ->groupBy($groupBy)
+                ->get();
+        } else {
+            $wrappedColumn = $query->getQuery()->getGrammar()->wrap(
+                $column = $column ?? $query->getModel()->getQualifiedKeyName()
+            );
+
+            $results = $query->select(
+                $groupBy, DB::raw("{$function}({$wrappedColumn}) as aggregate")
+            )->groupBy($groupBy)->get();
+
+        }
+
+        return $this->result($results->mapWithKeys(function ($result) use ($groupBy) {
+            return $this->formatAggregateResult($result, $groupBy);
+        })->all());
     }
 
     /**

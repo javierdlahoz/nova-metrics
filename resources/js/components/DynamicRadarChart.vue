@@ -69,6 +69,12 @@ export default {
         }
     },
 
+    mounted() {
+        if (!this.resourceName || this.card.onlyOnDetail) {
+            this.fetch()
+        }
+    },
+
     methods: {
         fetch() {
             this.loading = true;
