@@ -10,6 +10,7 @@ Nova.booting((Vue, router, store) => {
     Vue.component('DynamicAdvancedTrendMetric', require('./components/DynamicAdvancedTrendMetric').default)
     Vue.component('DynamicTrendSeriesMetric', require('./components/DynamicTrendSeriesMetric').default)
     Vue.component('DynamicRadialMetric', require('./components/DynamicRadialMetric').default)
+    Vue.component('DynamicSliderMetric', require('./components/DynamicSliderMetric').default)
     Vue.component('JdlabsGroupedMetrics', require('./components/GroupedMetrics').default)
 
     Vue.component('JdlabsPieMetric', require('./components/Base/PieMetric').default)
@@ -18,6 +19,7 @@ Nova.booting((Vue, router, store) => {
     Vue.component('JdlabsAdvancedTrendMetric', require('./components/Base/AdvancedTrendMetric').default)
     Vue.component('JdlabsTrendSeriesMetric', require('./components/Base/TrendSeriesMetric').default)
     Vue.component('JdlabsRadarMetric', require('./components/Base/RadarMetric').default)
+    Vue.component('JdlabsDynamicSliderMetric', require('./components/Base/DynamicSliderMetric').default)
 
     Vue.component('CustomBaseValueMetric', require('./components/Base/ValueMetric').default)
     Vue.component('CustomBasePartitionMetric', require('./components/Base/PartitionMetric').default)

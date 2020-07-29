@@ -99,12 +99,12 @@
         methods: {
             handleRangeSelected(key) {
                 this.selectedRangeKey = key
-                this.fetch()
+                this.fetch(this.selectedRangeKey)
             },
 
             fetch() {
                 this.loading = true
-                Minimum(Nova.request().get(this.metricEndpoint, this.metricPayload)).then(
+                Nova.request().get(this.metricEndpoint, this.metricPayload).then(
                     ({
                          data: {
                              value: {

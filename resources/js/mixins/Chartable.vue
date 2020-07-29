@@ -9,16 +9,29 @@ export default {
     methods: {
         fetch () {
             this.loading = true
-
-            Minimum(Nova.request(this.chartEndpoint)).then(
+            Nova.request().get(this.chartEndpoint, this.metricPayload).then(
                 ({
                     data: {
-                        value: { value },
+                        value: {
+                            value,
+                            previous,
+                            prefix,
+                            suffix,
+                            suffixInflection,
+                            format,
+                            zeroResult,
+                        },
                     },
                 }) => {
-                    this.chartData = value
+                    this.value = value
+                    this.format = format || this.format
+                    this.prefix = prefix || this.prefix
+                    this.suffix = suffix || this.suffix
+                    this.suffixInflection = suffixInflection
+                    this.zeroResult = zeroResult || this.zeroResult
+                    this.previous = previous
                     this.loading = false
-                    this.renderChart()
+                    this.afterFetch()
                 }
             )
         },
@@ -28,10 +41,43 @@ export default {
                 this.chartOptions = this.card.meta
                 this.chartOptions.labels = this.labels
             }
+        },
+
+        handleRangeSelected(key) {
+            this.selectedRangeKey = key
+            this.fetch()
+        },
+
+        whenCreated() {
+            if (this.hasRanges) {
+                this.selectedRangeKey = this.card.ranges[0].value;
+            }
+
+            if (this.card.refreshWhenActionRuns) {
+                Nova.$on("action-executed", () => this.fetch())
+            }
+
+            if (this.resourceName) {
+                Nova.$on("resources-loaded", () => this.fetch())
+            }
+        },
+
+        whenMounted() {
+            if (!this.resourceName || this.card.onlyOnDetail) {
+                this.fetch(this.selectedRangeKey)
+            }
+        },
+
+        afterFetch() {
+            // TODO: override in elements
         }
     },
 
     computed: {
+        hasRanges() {
+            return this.card.ranges && this.card.ranges.length > 0
+        },
+
         chartPayload () {
             return {}
         },
