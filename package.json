@@ -22,7 +22,7 @@
         "chartist-plugin-tooltips": "^0.0.17"
     },
     "dependencies": {
-        "apexcharts": "^3.10.1",
+        "apexcharts": "^3.24.0",
         "laravel-nova": "^1.0.7",
         "vue": "^2.5.0",
         "vue-apexcharts": "^1.5.1"
